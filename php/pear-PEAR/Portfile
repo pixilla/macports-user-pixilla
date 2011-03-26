@@ -1,0 +1,19 @@
+# -*- coding: utf-8; mode: tcl; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- vim:fenc=utf-8:ft=tcl:et:sw=4:ts=4:sts=4
+# $Id$
+
+PortSystem          1.0
+PortGroup           php5pear 1.0
+
+php5pear.setup      PEAR 1.9.2
+categories-append   net www
+platforms           darwin
+maintainers         pixilla
+
+description         PEAR PEAR package
+long_description    ${description}
+
+checksums           sha1    1dda2c7c1c87532f6a45a54b98521a2e9efa02b3 \
+                    rmd160  f12b6a0a4600b0b227a88687c124b515621ca803
+
+depends_lib-append	port:pear-Archive_Tar port:pear-Structures_Graph \
+                    port:pear-Console_Getopt port:pear-XML_Util
