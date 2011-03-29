@@ -15,4 +15,4 @@ long_description    ${description}
 checksums           sha1    7dd5206d3de9654d2cbb4a9ece4ae2dcd30f377c \
                     rmd160  64419b11783c6e0b28ecdc8b21078346090cd955
 
-depends_lib-append	port:pear-PEAR
+depends_lib-append  port:pear-PEAR

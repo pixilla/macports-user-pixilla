@@ -15,4 +15,4 @@ long_description    ${description}
 checksums           sha1    ffce93a26c83dcaab83418269f4a28c6fc7a3c52 \
                     rmd160  b9f3f2aab75df9e1cf131333dbff852451e8f5de
 
-depends_lib-append	port:pear-Net_Socket
+depends_lib-append  port:pear-Net_Socket

@@ -15,4 +15,5 @@ long_description    ${description}
 checksums           sha1    9e186cf160172c01856026f476a8e715abab53ab \
                     rmd160  3eabb673e5d6ba7077a7b166752b96aecc9af4a1
 
-depends_lib-append	port:pear-XML_Parser port:pear-XML_Util
+depends_lib-append  port:pear-XML_Parser \
+                    port:pear-XML_Util

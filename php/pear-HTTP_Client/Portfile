@@ -15,4 +15,4 @@ long_description    ${description}
 checksums           sha1    c5efeb3005fbbf21577e37da096bf53455de3b4b \
                     rmd160  ed236013d327aa1094e33cfac7736b67d9c8b614
 
-depends_lib-append	port:pear-HTTP_Request
+depends_lib-append  port:pear-HTTP_Request

@@ -15,5 +15,7 @@ long_description    ${description}
 checksums           sha1    1dda2c7c1c87532f6a45a54b98521a2e9efa02b3 \
                     rmd160  f12b6a0a4600b0b227a88687c124b515621ca803
 
-depends_lib-append	port:pear-Archive_Tar port:pear-Structures_Graph \
-                    port:pear-Console_Getopt port:pear-XML_Util
+depends_lib-append  port:pear-Archive_Tar \
+                    port:pear-Structures_Graph \
+                    port:pear-Console_Getopt \
+                    port:pear-XML_Util

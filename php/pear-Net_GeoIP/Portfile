@@ -1,0 +1,16 @@
+# -*- coding: utf-8; mode: tcl; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- vim:fenc=utf-8:ft=tcl:et:sw=4:ts=4:sts=4
+# $Id$
+
+PortSystem          1.0
+PortGroup           php5pear 1.0
+
+php5pear.setup      Net_GeoIP 1.0.0RC3
+categories-append   net www
+platforms           darwin
+maintainers         pixilla
+
+description         PEAR Net_GeoIP package
+long_description    ${description}
+
+checksums           sha1    82e476ea071dfb9980adac97ececcf584b942bc4 \
+                    rmd160  09326fffe1cf1bd17125b7d48a892cf8dea90e88

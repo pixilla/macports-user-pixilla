@@ -41,49 +41,73 @@
 # version, and channel is the channel hosting the package (default: pear.php.net).
 # 
 
-default package {}
-default version {}
-default channel pear.php.net
+options php5pear.package
+options php5pear.channel
+options php5pear.bin-pre
+options php5pear.bin
+options php5pear.bin-post
+options php5pear.cmd
+options php5pear.destroot
 
-proc php5pear.setup {package version {channel "pear.php.net"}} {
-    global worksrcpath distname extract.suffix master_sites
-    global packagingroot
+proc php5pear.setup {php5pear.package version {php5pear.channel "pear.php.net"}} {
+    global worksrcpath distname extract.suffix master_sites prefix
+    global php5pear.bin-pre php5pear.bin php5pear.bin-post php5pear.cmd
 
-    set package         [lindex ${package} 0]
-    name                pear-${package}
+    php5pear.package    ${php5pear.package}
+    php5pear.channel    ${php5pear.channel}
+    name                pear-${php5pear.package}
     version             ${version}
     categories          php
-    distname            ${package}-${version}
+    distname            ${php5pear.package}-${version}
     extract.suffix      .tgz
-    homepage            http://${channel}/package/${package}
-    master_sites        http://download.${channel}/package
+    homepage            http://${php5pear.channel}/package/${php5pear.package}
+    master_sites        http://${php5pear.channel}/get
     livecheck.type      regex
-    livecheck.url       http://pear.php.net/package/${package}/download
-    livecheck.regex     "http://download.${channel}/package/${package}-((?!\.tgz).*)${extract.suffix}"
+    livecheck.url       http://pear.php.net/package/${php5pear.package}/download
+    livecheck.regex     "http://download.${php5pear.channel}/package/${php5pear.package}-((?!\.tgz).*)${extract.suffix}"
 
+    supported_archs     noarch
     use_parallel_build  yes
     depends_lib         path:bin/phpize:php5 port:php5-pear
-    extract.mkdir       yes
-    set packagingroot   ${worksrcpath}/packagingroot    
 
+    php5pear.destroot   ${worksrcpath}/packagingroot    
+    php5pear.bin-pre    TZ=UTC
+    php5pear.bin        ${prefix}/libexec/php/bin/pear
+    php5pear.bin-post   -C ${prefix}/libexec/php/etc/pear.conf \
+                        -c ${prefix}/libexec/php/etc/pear.conf
+
+    extract.mkdir       yes
     extract {
         copy ${distpath}/${distname}${extract.suffix} ${worksrcpath}
     }
 
     configure {
-        xinstall -d ${worksrcpath}/build
+        set fp [open "${prefix}/libexec/php/etc/pear.conf" r]
+        set ccount [regexp -all "${php5pear.channel}" [read $fp]]
+        close $fp
+        if { ! $ccount && "${php5pear.channel}" != "pear.php.net" } {
+            system "curl -s http://${php5pear.channel}/channel.xml -o ${worksrcpath}/channel.xml"
+            system "${php5pear.bin-pre} ${php5pear.bin} ${php5pear.bin-post} channel-add ${worksrcpath}/channel.xml"
+        } else {
+            system "${php5pear.bin-pre} ${php5pear.bin} ${php5pear.bin-post} channel-update ${php5pear.channel}"
+        }
     }
     
     build {
-#        system "TZ=\"UTC\" ${prefix}/libexec/php/bin/pear -C ${prefix}/libexec/php/etc/pear.conf channel-update ${channel}"
-        system "cd ${worksrcpath} && TZ=\"UTC\" ${prefix}/libexec/php/bin/pear -C ${prefix}/libexec/php/etc/pear.conf install --nodeps --offline --ignore-errors --packagingroot=${packagingroot} ${distname}${extract.suffix}"
+        system "${php5pear.bin-pre} ${php5pear.bin} ${php5pear.bin-post} config-show"
+        system "cd ${worksrcpath} && ${php5pear.bin-pre} ${php5pear.bin} ${php5pear.bin-post} install --nodeps --offline --ignore-errors --packagingroot=${php5pear.destroot} ${distname}${extract.suffix}"
     }
     
     destroot {
         xinstall -d ${destroot}${prefix}/lib/php/pear
-        foreach path [glob -nocomplain -directory ${packagingroot}${prefix}/lib/php/pear *] {
+        foreach path [glob -nocomplain -directory ${php5pear.destroot}${prefix}/libexec/php/pear *] {
             copy ${path} ${destroot}${prefix}/lib/php/pear
         }
+        if { [file exists "${destroot}${prefix}/lib/php/pear/generate_package_xml.php"] } {
+            file rename "${destroot}${prefix}/lib/php/pear/generate_package_xml.php" "${destroot}${prefix}/lib/php/pear/conflict-${php5pear.package}-generate_package_xml.php"
+        }
+        if { [file exists "${destroot}${prefix}/lib/php/pear/package.php"] } {
+            file rename "${destroot}${prefix}/lib/php/pear/package.php" "${destroot}${prefix}/lib/php/pear/conflict-${php5pear.package}-package.php"
+        }
     }
-    
 }

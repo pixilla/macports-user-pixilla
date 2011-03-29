@@ -22,44 +22,122 @@ distfiles           install-pear-nozlib.phar
 checksums           sha1    d59ea92ebd9bea4c992026f4473a3249779231fd \
                     rmd160  cd70e616f81f0c3450904b70f00a117879f0abc3
 
+set buildpath       ${worksrcpath}/build
+set instpath        ${buildpath}/libexec/php
+set pearpath        ${prefix}/libexec/php
+set systemtmp       /private/tmp/pear
+
 extract.mkdir       yes
-set buildpath ${worksrcpath}/build
 extract {
-    xinstall -d ${buildpath}/libexec/php/pear/bin
-    xinstall -d ${buildpath}/libexec/php/pear/etc
-    xinstall -d ${buildpath}/lib/php/pear
-    xinstall -d ${buildpath}/var/db/php5
     file copy ${distpath}/install-pear-nozlib.phar ${worksrcpath}
 }
-use_configure       no
+configure {
+    system "cd ${worksrcpath} && \
+    PHP_PEAR_INSTALL_DIR=${instpath}/pear \
+    PHP_PEAR_BIN_DIR=${instpath}/bin \
+    PHP_PEAR_PHP_BIN=${prefix}/bin/php \
+    PHP_PEAR_CFG_DIR=${instpath}/pear/cfg \
+    PHP_PEAR_DOC_DIR=${instpath}/pear/docs \
+    PHP_PEAR_DATA_DIR=${instpath}/pear/data \
+    PHP_PEAR_WWW_DIR=${instpath}/pear/www \
+    PHP_PEAR_TEST_DIR=${instpath}/pear/tests \
+    PHP_PEAR_SYSCONF_DIR=${instpath}/etc \
+    ${prefix}/bin/php \
+    install-pear-nozlib.phar \
+    "
+}
 build {
-    system "cd ${worksrcpath} && ${prefix}/bin/php install-pear-nozlib.phar -d ${buildpath}/libexec/php/pear -b ${buildpath}/libexec/php/bin -c ${buildpath}/libexec/php/etc"
-    system "cd ${worksrcpath} && PHP_PEAR_INSTALL_DIR=${buildpath}/libexec/php/pear PHP_PEAR_BIN_DIR=${buildpath}/libexec/php/bin ${buildpath}/libexec/php/bin/pear -c ${buildpath}/libexec/php/etc/pear.conf -C ${buildpath}/libexec/php/etc/pear.conf config-set bin_dir ${prefix}/libexec/php/pear/bin"
-    system "cd ${worksrcpath} && PHP_PEAR_INSTALL_DIR=${buildpath}/libexec/php/pear PHP_PEAR_BIN_DIR=${buildpath}/libexec/php/bin ${buildpath}/libexec/php/bin/pear -c ${buildpath}/libexec/php/etc/pear.conf -C ${buildpath}/libexec/php/etc/pear.conf config-set php_dir ${prefix}/lib/php/pear"
-    system "cd ${worksrcpath} && PHP_PEAR_INSTALL_DIR=${buildpath}/libexec/php/pear PHP_PEAR_BIN_DIR=${buildpath}/libexec/php/bin ${buildpath}/libexec/php/bin/pear -c ${buildpath}/libexec/php/etc/pear.conf -C ${buildpath}/libexec/php/etc/pear.conf config-set php_bin ${prefix}/bin/php"
-    system "cd ${worksrcpath} && PHP_PEAR_INSTALL_DIR=${buildpath}/libexec/php/pear PHP_PEAR_BIN_DIR=${buildpath}/libexec/php/bin ${buildpath}/libexec/php/bin/pear -c ${buildpath}/libexec/php/etc/pear.conf -C ${buildpath}/libexec/php/etc/pear.conf config-show"
+    xinstall -d ${buildpath}/lib/php/pear
+    xinstall -d ${buildpath}/var/db/php5
+
+    system "PHP_PEAR_INSTALL_DIR=${instpath}/pear \
+    PHP_PEAR_BIN_DIR=${instpath}/bin ${instpath}/bin/pear \
+    -c ${instpath}/etc/pear.conf -C ${instpath}/etc/pear.conf \
+    config-show"
+
+    system " \
+    ${instpath}/bin/pear \
+    -c ${instpath}/etc/pear.conf -C ${instpath}/etc/pear.conf \
+    config-create ${pearpath} ${instpath}/etc/pear.conf"
+
+    system "PHP_PEAR_INSTALL_DIR=${instpath}/pear \
+    PHP_PEAR_SYSCONF_DIR=${instpath}/etc \
+    PHP_PEAR_BIN_DIR=${instpath}/bin \
+    ${instpath}/bin/pear \
+    -c ${instpath}/etc/pear.conf -C ${instpath}/etc/pear.conf \
+    config-set php_dir ${pearpath}/pear"
+
+    system "PHP_PEAR_INSTALL_DIR=${instpath}/pear \
+    PHP_PEAR_SYSCONF_DIR=${instpath}/etc \
+    PHP_PEAR_BIN_DIR=${instpath}/bin \
+    ${instpath}/bin/pear \
+    -c ${instpath}/etc/pear.conf -C ${instpath}/etc/pear.conf \
+    config-set bin_dir ${pearpath}/bin"
+
+    system "PHP_PEAR_INSTALL_DIR=${instpath}/pear \
+    PHP_PEAR_SYSCONF_DIR=${instpath}/etc \
+    PHP_PEAR_BIN_DIR=${instpath}/bin \
+    ${instpath}/bin/pear \
+    -c ${instpath}/etc/pear.conf -C ${instpath}/etc/pear.conf \
+    config-set cache_dir ${systemtmp}/cache"
+
+    system "PHP_PEAR_INSTALL_DIR=${instpath}/pear \
+    PHP_PEAR_SYSCONF_DIR=${instpath}/etc \
+    PHP_PEAR_BIN_DIR=${instpath}/bin \
+    ${instpath}/bin/pear \
+    -c ${instpath}/etc/pear.conf -C ${instpath}/etc/pear.conf \
+    config-set download_dir ${systemtmp}/download"
+
+    system "PHP_PEAR_INSTALL_DIR=${instpath}/pear \
+    PHP_PEAR_SYSCONF_DIR=${instpath}/etc \
+    PHP_PEAR_BIN_DIR=${instpath}/bin \
+    ${instpath}/bin/pear \
+    -c ${instpath}/etc/pear.conf -C ${instpath}/etc/pear.conf \
+    config-set temp_dir ${systemtmp}/temp"
+
+    system "PHP_PEAR_INSTALL_DIR=${instpath}/pear \
+    PHP_PEAR_SYSCONF_DIR=${instpath}/etc \
+    PHP_PEAR_BIN_DIR=${instpath}/bin \
+    ${instpath}/bin/pear \
+    -c ${instpath}/etc/pear.conf -C ${instpath}/etc/pear.conf \
+    config-set sig_keydir ${pearpath}/etc/pearkeys"
+
+    system "PHP_PEAR_INSTALL_DIR=${instpath}/pear \
+    PHP_PEAR_BIN_DIR=${instpath}/bin ${instpath}/bin/pear \
+    -c ${instpath}/etc/pear.conf -C ${instpath}/etc/pear.conf \
+    config-set auto_discover 1"
+
+    system "PHP_PEAR_INSTALL_DIR=${instpath}/pear \
+    PHP_PEAR_BIN_DIR=${instpath}/bin ${instpath}/bin/pear \
+    -c ${instpath}/etc/pear.conf -C ${instpath}/etc/pear.conf \
+    config-show"
+
+    xinstall -d ${buildpath}/lib/php/pear
     set fp [open ${buildpath}/lib/php/pear/pear-ini.php w]
     puts $fp "<?php"
     puts $fp "# Automatically add the PEAR repository path to PHP's include_path."
     puts $fp "set_include_path ( get_include_path (  ) . PATH_SEPARATOR . '${prefix}/lib/php/pear' ) ;"
     puts $fp "?>"
     close $fp
+
+    xinstall -d ${buildpath}/var/db/php5
     set fp [open ${buildpath}/var/db/php5/pear.ini w]
     puts $fp "; Do not edit this file; it is automatically generated by MacPorts."
     puts $fp "; Any changes you make will be lost if you upgrade or uninstall php5-pear."
     puts $fp "; To configure PHP, edit ${prefix}/etc/php5/php.ini."
     puts $fp "auto_prepend_file = '${prefix}/lib/php/pear/pear-ini.php'"
     close $fp
-    reinplace "s|${buildpath}|${prefix}|g" ${buildpath}/libexec/php/bin/pear
-    reinplace "s|${buildpath}|${prefix}|g" ${buildpath}/libexec/php/bin/peardev
-    reinplace "s|${buildpath}|${prefix}|g" ${buildpath}/libexec/php/bin/pecl
-    reinplace "s|${buildpath}|${prefix}|g" ${buildpath}/libexec/php/pear/pearcmd.php
-    reinplace "s|${buildpath}|${prefix}|g" ${buildpath}/libexec/php/pear/peclcmd.php
-    reinplace "s|${buildpath}|${prefix}|g" ${buildpath}/libexec/php/pear/.registry/archive_tar.reg
-    reinplace "s|${buildpath}|${prefix}|g" ${buildpath}/libexec/php/pear/.registry/console_getopt.reg
-    reinplace "s|${buildpath}|${prefix}|g" ${buildpath}/libexec/php/pear/.registry/pear.reg
-    reinplace "s|${buildpath}|${prefix}|g" ${buildpath}/libexec/php/pear/.registry/structures_graph.reg
-    reinplace "s|${buildpath}|${prefix}|g" ${buildpath}/libexec/php/pear/.registry/xml_util.reg
+
+    reinplace "s|${buildpath}|${prefix}|g" ${instpath}/bin/pear
+    reinplace "s|${buildpath}|${prefix}|g" ${instpath}/bin/peardev
+    reinplace "s|${buildpath}|${prefix}|g" ${instpath}/bin/pecl
+    reinplace "s|${buildpath}|${prefix}|g" ${instpath}/pear/pearcmd.php
+    reinplace "s|${buildpath}|${prefix}|g" ${instpath}/pear/peclcmd.php
+    reinplace "s|${buildpath}|${prefix}|g" ${instpath}/pear/.registry/archive_tar.reg
+    reinplace "s|${buildpath}|${prefix}|g" ${instpath}/pear/.registry/console_getopt.reg
+    reinplace "s|${buildpath}|${prefix}|g" ${instpath}/pear/.registry/pear.reg
+    reinplace "s|${buildpath}|${prefix}|g" ${instpath}/pear/.registry/structures_graph.reg
+    reinplace "s|${buildpath}|${prefix}|g" ${instpath}/pear/.registry/xml_util.reg
 }
 
 destroot {
@@ -67,5 +145,7 @@ destroot {
     xinstall -d ${destroot}${prefix}/var/db/php5
     file copy ${buildpath}/lib/php/pear/pear-ini.php ${destroot}${prefix}/lib/php/pear/pear-ini.php
     file copy ${buildpath}/var/db/php5/pear.ini ${destroot}${prefix}/var/db/php5/pear.ini
-    file copy ${buildpath}/libexec/php ${destroot}${prefix}/libexec
+    file copy ${instpath} ${destroot}${prefix}/libexec
+    system "chown -R :staff ${destroot}${prefix}/libexec/php/pear/\.*"
+    system "chmod -R g+w ${destroot}${prefix}/libexec/php/pear/\.*"
 }
