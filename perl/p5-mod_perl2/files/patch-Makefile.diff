@@ -1,0 +1,75 @@
+--- Makefile.orig	2011-04-18 07:08:23.000000000 -0700
++++ Makefile	2011-04-18 07:24:50.000000000 -0700
+@@ -29,7 +29,7 @@
+ #     clean => { FILES=>q[src/modules/perl/Makefile src/modules/perl/ldopts lib/Apache2/BuildConfig.pm WrapXS/Makefile.PL WrapXS/typemap WrapXS/Apache2/Makefile.PL WrapXS/Apache2/Access/Access.pm WrapXS/Apache2/Access/Access.xs WrapXS/Apache2/Access/Makefile.PL WrapXS/Apache2/CmdParms/CmdParms.pm WrapXS/Apache2/CmdParms/CmdParms.xs WrapXS/Apache2/CmdParms/Makefile.PL WrapXS/Apache2/Command/Command.pm WrapXS/Apache2/Command/Command.xs WrapXS/Apache2/Command/Makefile.PL WrapXS/Apache2/Connection/Connection.pm WrapXS/Apache2/Connection/Connection.xs WrapXS/Apache2/Connection/Makefile.PL WrapXS/Apache2/ConnectionUtil/ConnectionUtil.pm WrapXS/Apache2/ConnectionUtil/ConnectionUtil.xs WrapXS/Apache2/ConnectionUtil/Makefile.PL WrapXS/Apache2/Directive/Directive.pm WrapXS/Apache2/Directive/Directive.xs WrapXS/Apache2/Directive/Makefile.PL WrapXS/Apache2/Filter/Filter.pm WrapXS/Apache2/Filter/Filter.xs WrapXS/Apache2/Filter/Makefile.PL WrapXS/Apache2/FilterRec/FilterRec.pm WrapXS/Apache2/FilterRec/FilterRec.xs WrapXS/Apache2/FilterRec/Makefile.PL WrapXS/Apache2/HookRun/HookRun.pm WrapXS/Apache2/HookRun/HookRun.xs WrapXS/Apache2/HookRun/Makefile.PL WrapXS/Apache2/Log/Log.pm WrapXS/Apache2/Log/Log.xs WrapXS/Apache2/Log/Makefile.PL WrapXS/Apache2/Module/Makefile.PL WrapXS/Apache2/Module/Module.pm WrapXS/Apache2/Module/Module.xs WrapXS/Apache2/MPM/Makefile.PL WrapXS/Apache2/MPM/MPM.pm WrapXS/Apache2/MPM/MPM.xs WrapXS/Apache2/Process/Makefile.PL WrapXS/Apache2/Process/Process.pm WrapXS/Apache2/Process/Process.xs WrapXS/Apache2/RequestIO/Makefile.PL WrapXS/Apache2/RequestIO/RequestIO.pm WrapXS/Apache2/RequestIO/RequestIO.xs WrapXS/Apache2/RequestRec/Makefile.PL WrapXS/Apache2/RequestRec/RequestRec.pm WrapXS/Apache2/RequestRec/RequestRec.xs WrapXS/Apache2/RequestUtil/Makefile.PL WrapXS/Apache2/RequestUtil/RequestUtil.pm WrapXS/Apache2/RequestUtil/RequestUtil.xs WrapXS/Apache2/Response/Makefile.PL WrapXS/Apache2/Response/Response.pm WrapXS/Apache2/Response/Response.xs WrapXS/Apache2/ServerRec/Makefile.PL WrapXS/Apache2/ServerRec/ServerRec.pm WrapXS/Apache2/ServerRec/ServerRec.xs WrapXS/Apache2/ServerUtil/Makefile.PL WrapXS/Apache2/ServerUtil/ServerUtil.pm WrapXS/Apache2/ServerUtil/ServerUtil.xs WrapXS/Apache2/SubProcess/Makefile.PL WrapXS/Apache2/SubProcess/SubProcess.pm WrapXS/Apache2/SubProcess/SubProcess.xs WrapXS/Apache2/SubRequest/Makefile.PL WrapXS/Apache2/SubRequest/SubRequest.pm WrapXS/Apache2/SubRequest/SubRequest.xs WrapXS/Apache2/URI/Makefile.PL WrapXS/Apache2/URI/URI.pm WrapXS/Apache2/URI/URI.xs WrapXS/Apache2/Util/Makefile.PL WrapXS/Apache2/Util/Util.pm WrapXS/Apache2/Util/Util.xs WrapXS/APR/Makefile.PL WrapXS/APR/Base64/Base64.pm WrapXS/APR/Base64/Base64.xs WrapXS/APR/Base64/Makefile.PL WrapXS/APR/Brigade/Brigade.pm WrapXS/APR/Brigade/Brigade.xs WrapXS/APR/Brigade/Makefile.PL WrapXS/APR/Bucket/Bucket.pm WrapXS/APR/Bucket/Bucket.xs WrapXS/APR/Bucket/Makefile.PL WrapXS/APR/BucketAlloc/BucketAlloc.pm WrapXS/APR/BucketAlloc/BucketAlloc.xs WrapXS/APR/BucketAlloc/Makefile.PL WrapXS/APR/BucketType/BucketType.pm WrapXS/APR/BucketType/BucketType.xs WrapXS/APR/BucketType/Makefile.PL WrapXS/APR/Date/Date.pm WrapXS/APR/Date/Date.xs WrapXS/APR/Date/Makefile.PL WrapXS/APR/Error/Error.pm WrapXS/APR/Error/Error.xs WrapXS/APR/Error/Makefile.PL WrapXS/APR/Finfo/Finfo.pm WrapXS/APR/Finfo/Finfo.xs WrapXS/APR/Finfo/Makefile.PL WrapXS/APR/IpSubnet/IpSubnet.pm WrapXS/APR/IpSubnet/IpSubnet.xs WrapXS/APR/IpSubnet/Makefile.PL WrapXS/APR/OS/Makefile.PL WrapXS/APR/OS/OS.pm WrapXS/APR/OS/OS.xs WrapXS/APR/Pool/Makefile.PL WrapXS/APR/Pool/Pool.pm WrapXS/APR/Pool/Pool.xs WrapXS/APR/SockAddr/Makefile.PL WrapXS/APR/SockAddr/SockAddr.pm WrapXS/APR/SockAddr/SockAddr.xs WrapXS/APR/Socket/Makefile.PL WrapXS/APR/Socket/Socket.pm WrapXS/APR/Socket/Socket.xs WrapXS/APR/Status/Makefile.PL WrapXS/APR/Status/Status.pm WrapXS/APR/Status/Status.xs WrapXS/APR/String/Makefile.PL WrapXS/APR/String/String.pm WrapXS/APR/String/String.xs WrapXS/APR/Table/Makefile.PL WrapXS/APR/Table/Table.pm WrapXS/APR/Table/Table.xs WrapXS/APR/ThreadMutex/Makefile.PL WrapXS/APR/ThreadMutex/ThreadMutex.pm WrapXS/APR/ThreadMutex/ThreadMutex.xs WrapXS/APR/ThreadRWLock/Makefile.PL WrapXS/APR/ThreadRWLock/ThreadRWLock.pm WrapXS/APR/ThreadRWLock/ThreadRWLock.xs WrapXS/APR/URI/Makefile.PL WrapXS/APR/URI/URI.pm WrapXS/APR/URI/URI.xs WrapXS/APR/Util/Makefile.PL WrapXS/APR/Util/Util.pm WrapXS/APR/Util/Util.xs WrapXS/APR/UUID/Makefile.PL WrapXS/APR/UUID/UUID.pm WrapXS/APR/UUID/UUID.xs WrapXS/ModPerl/Makefile.PL WrapXS/ModPerl/Global/Global.pm WrapXS/ModPerl/Global/Global.xs WrapXS/ModPerl/Global/Makefile.PL WrapXS/ModPerl/Util/Makefile.PL WrapXS/ModPerl/Util/Util.pm WrapXS/ModPerl/Util/Util.xs xs/modperl_xs_typedefs.h xs/modperl_xs_sv_convert.h lib/typemap lib/ModPerl/MethodLookup.pm lib/ModPerl/DummyVersions.pm t/htdocs/vhost/error_log t/SMOKE t/TEST t/REPORT src/modules/perl/modperl_hooks.c src/modules/perl/modperl_directives.c src/modules/perl/modperl_flags.c src/modules/perl/modperl_xsinit.c src/modules/perl/modperl_exports.c src/modules/perl/modperl_constants.c src/modules/perl/modperl_hooks.h src/modules/perl/modperl_directives.h src/modules/perl/modperl_flags.h src/modules/perl/modperl_trace.h src/modules/perl/modperl_largefiles.h src/modules/perl/modperl_constants.h glue_pods] }
+ #     dist => { DIST_DEFAULT=>q[mydist], COMPRESS=>q[gzip -9f], SUFFIX=>q[gz] }
+ #     dynamic_lib => { OTHERLDFLAGS=>q[-L/opt/local/lib -arch x86_64 -fstack-protector] }
+-#     macro => { MODPERL_MAKEFILE=>q[Makefile], MODPERL_XS_H_FILES=>q[xs/modperl_xs_sv_convert.h \ 	xs/modperl_xs_typedefs.h \ 	xs/modperl_xs_util.h \ 	xs/APR/PerlIO/modperl_apr_perlio.h], PERL=>q[/opt/local/bin/perl], MOD_INSTALL=>q[$(PERL) -I$(INST_LIB) -I$(PERL_LIB) \ -I/opt/local/var/macports/build/_Users_brad_misc_macports_pixilla_perl_p5-mod_perl2/work/mod_perl-2.0.5/Apache-Test/lib -MModPerl::BuildMM \ -e "ExtUtils::Install::install({@ARGV},'$(VERBINST)',0,'$(UNINST)');" ], MODPERL_SRC=>q[src/modules/perl], MODPERL_AP_INCLUDEDIR=>q[/opt/local/apache2/include] }
++#     macro => { MODPERL_MAKEFILE=>q[Makefile], MODPERL_XS_H_FILES=>q[xs/modperl_xs_sv_convert.h \ 	xs/modperl_xs_typedefs.h \ 	xs/modperl_xs_util.h \ 	xs/APR/PerlIO/modperl_apr_perlio.h], PERL=>q[/opt/local/bin/perl], MOD_INSTALL=>q[$(PERL) -I$(INST_LIB) -I$(PERL_LIB) \ -MModPerl::BuildMM \ -e "ExtUtils::Install::install({@ARGV},'$(VERBINST)',0,'$(UNINST)');" ], MODPERL_SRC=>q[src/modules/perl], MODPERL_AP_INCLUDEDIR=>q[/opt/local/apache2/include] }
+ 
+ # --- MakeMaker post_initialize section:
+ 
+@@ -379,7 +379,7 @@
+ 	xs/APR/PerlIO/modperl_apr_perlio.h
+ PERL = /opt/local/bin/perl
+ MOD_INSTALL = $(PERL) -I$(INST_LIB) -I$(PERL_LIB) \
+--I/opt/local/var/macports/build/_Users_brad_misc_macports_pixilla_perl_p5-mod_perl2/work/mod_perl-2.0.5/Apache-Test/lib -MModPerl::BuildMM \
++-MModPerl::BuildMM \
+ -e "ExtUtils::Install::install({@ARGV},'$(VERBINST)',0,'$(UNINST)');"
+ 
+ MODPERL_SRC = src/modules/perl
+@@ -673,9 +673,6 @@
+ 	$(NOECHO) cd Apache-SizeLimit && $(MAKE) $(USEMAKEFILE) $(FIRST_MAKEFILE) all $(PASTHRU)
+ 
+ subdirs ::
+-	$(NOECHO) cd Apache-Test && $(MAKE) $(USEMAKEFILE) $(FIRST_MAKEFILE) all $(PASTHRU)
+-
+-subdirs ::
+ 	$(NOECHO) cd ModPerl-Registry && $(MAKE) $(USEMAKEFILE) $(FIRST_MAKEFILE) all $(PASTHRU)
+ 
+ subdirs ::
+@@ -689,7 +686,6 @@
+ clean_subdirs :
+ 	$(ABSPERLRUN)  -e 'chdir '\''Apache-Reload'\'';  system '\''$(MAKE) clean'\'' if -f '\''$(FIRST_MAKEFILE)'\'';' --
+ 	$(ABSPERLRUN)  -e 'chdir '\''Apache-SizeLimit'\'';  system '\''$(MAKE) clean'\'' if -f '\''$(FIRST_MAKEFILE)'\'';' --
+-	$(ABSPERLRUN)  -e 'chdir '\''Apache-Test'\'';  system '\''$(MAKE) clean'\'' if -f '\''$(FIRST_MAKEFILE)'\'';' --
+ 	$(ABSPERLRUN)  -e 'chdir '\''ModPerl-Registry'\'';  system '\''$(MAKE) clean'\'' if -f '\''$(FIRST_MAKEFILE)'\'';' --
+ 	$(ABSPERLRUN)  -e 'chdir '\''WrapXS'\'';  system '\''$(MAKE) clean'\'' if -f '\''$(FIRST_MAKEFILE)'\'';' --
+ 	$(ABSPERLRUN)  -e 'chdir '\''xs'\'';  system '\''$(MAKE) clean'\'' if -f '\''$(FIRST_MAKEFILE)'\'';' --
+@@ -812,8 +808,6 @@
+ 	- $(ABSPERLRUN)  -e 'chdir '\''Apache-Reload'\'';  system '\''$(MAKE) $(USEMAKEFILE) $(FIRST_MAKEFILE) realclean'\'' if -f '\''$(FIRST_MAKEFILE)'\'';' --
+ 	- $(ABSPERLRUN)  -e 'chdir '\''Apache-SizeLimit'\'';  system '\''$(MAKE) $(USEMAKEFILE) $(MAKEFILE_OLD) realclean'\'' if -f '\''$(MAKEFILE_OLD)'\'';' --
+ 	- $(ABSPERLRUN)  -e 'chdir '\''Apache-SizeLimit'\'';  system '\''$(MAKE) $(USEMAKEFILE) $(FIRST_MAKEFILE) realclean'\'' if -f '\''$(FIRST_MAKEFILE)'\'';' --
+-	- $(ABSPERLRUN)  -e 'chdir '\''Apache-Test'\'';  system '\''$(MAKE) $(USEMAKEFILE) $(MAKEFILE_OLD) realclean'\'' if -f '\''$(MAKEFILE_OLD)'\'';' --
+-	- $(ABSPERLRUN)  -e 'chdir '\''Apache-Test'\'';  system '\''$(MAKE) $(USEMAKEFILE) $(FIRST_MAKEFILE) realclean'\'' if -f '\''$(FIRST_MAKEFILE)'\'';' --
+ 	- $(ABSPERLRUN)  -e 'chdir '\''ModPerl-Registry'\'';  system '\''$(MAKE) $(USEMAKEFILE) $(MAKEFILE_OLD) realclean'\'' if -f '\''$(MAKEFILE_OLD)'\'';' --
+ 	- $(ABSPERLRUN)  -e 'chdir '\''ModPerl-Registry'\'';  system '\''$(MAKE) $(USEMAKEFILE) $(FIRST_MAKEFILE) realclean'\'' if -f '\''$(FIRST_MAKEFILE)'\'';' --
+ 	- $(ABSPERLRUN)  -e 'chdir '\''WrapXS'\'';  system '\''$(MAKE) $(USEMAKEFILE) $(MAKEFILE_OLD) realclean'\'' if -f '\''$(MAKEFILE_OLD)'\'';' --
+@@ -1087,7 +1081,7 @@
+ $(MAKE_APERL_FILE) : $(FIRST_MAKEFILE) pm_to_blib
+ 	$(NOECHO) $(ECHO) Writing \"$(MAKE_APERL_FILE)\" for this $(MAP_TARGET)
+ 	$(NOECHO) $(PERLRUNINST) \
+-		Makefile.PL DIR=Apache-Reload:Apache-SizeLimit:Apache-Test:ModPerl-Registry:WrapXS:xs \
++		Makefile.PL DIR=Apache-Reload:Apache-SizeLimit:ModPerl-Registry:WrapXS:xs \
+ 		MAKEFILE=$(MAKE_APERL_FILE) LINKTYPE=static \
+ 		MAKEAPERL=1 NORECURS=1 CCCDLFLAGS= \
+ 		INSTALLDIRS=vendor
+@@ -1310,7 +1304,7 @@
+ 	$(NOECHO) $(POD2MAN_EXE) --section=3 /opt/local/var/macports/build/_Users_brad_misc_macports_pixilla_perl_p5-mod_perl2/work/mod_perl-2.0.5/docs/api/ModPerl/Registry.pod $(INST_MAN3DIR)/ModPerl::Registry.$(MAN3EXT)
+ 	@$(TOUCH) $@
+ 
+-mydist : Apache-Test/META.yml mod_perl.spec manifest tardist
++mydist : mod_perl.spec manifest tardist
+ 
+ rpm: dist
+ 	@[ -d $(PWD)/rpm ] || mkdir $(PWD)/rpm
+@@ -1323,9 +1317,6 @@
+ mod_perl.spec: build/make_rpm_spec
+ 	$(PERL) build/make_rpm_spec
+ 
+-Apache-Test/META.yml:
+-	cd Apache-Test && make metafile
+-
+ tag :
+ 	svn copy  https://svn.apache.org/repos/asf/perl/modperl/branches/release/$(VERSION_SYM)  https://svn.apache.org/repos/asf/perl/modperl/tags/$(VERSION_SYM)
+ 	svn copy  https://svn.apache.org/repos/asf/perl/modperl/docs/trunk https://svn.apache.org/repos/asf/perl/modperl/docs/tags/$(VERSION_SYM)

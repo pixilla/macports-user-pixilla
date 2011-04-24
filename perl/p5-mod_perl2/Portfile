@@ -1,0 +1,72 @@
+# -*- coding: utf-8; mode: tcl; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- vim:fenc=utf-8:ft=tcl:et:sw=4:ts=4:sts=4
+# $Id$
+
+PortSystem          1.0
+PortGroup           perl5 1.0
+
+perl5.setup         mod_perl 2.0.5 ../by-authors/id/P/PH/PHRED/
+name                p5-mod_perl2
+maintainers         pixilla
+description         Embeds a Perl interpreter in the Apache2 server
+long_description    ${description}
+
+conflicts           mod_perl2
+platforms           darwin
+
+checksums           sha1    e749e2d7236273217f33cbe7fcd704a662e532d1 \
+                    rmd160  d659db1c64200ed9c8863c6e283360dfdd0c8384
+
+depends_lib-append  port:apache2 port:p5-apache-test
+
+pre-fetch {
+    set perl_threads [perl5.extract_config useithreads]
+#    puts ${perl_threads}
+    if {${perl_threads} == "undef"} {
+        ui_error "Sorry, mod_perl requires perl5 to be built with threads."
+        ui_error "Try rebuilding perl5 with +threads variant."
+        ui_error ""
+        ui_error "    sudo port upgrade --enforce-variants perl5 +threads"
+        ui_error ""
+        return -code error
+    }
+}
+
+configure.args-append \
+                    MP_APXS=${prefix}/apache2/bin/apxs
+
+post-configure {
+    system "cd ${worksrcpath}; patch -p0 < ${filespath}/patch-Makefile.diff"
+    if {[file exists ${worksrcpath}/Apache-Test]} {
+        delete ${worksrcpath}/Apache-Test
+    }
+}
+
+destroot.violate_mtree yes
+post-destroot {
+    set port_conflicts {p5-apache-test}
+    puts "##########################################################"
+    puts "# MacPorts: checking for conflicts"
+    foreach port_conflict ${port_conflicts} {
+        set unwanted [exec port -q contents ${port_conflict}| awk "BEGIN {FS=\"/\"} {print \$\(NF-1\)\"\/\"\$NF}"]
+#    puts ${unwanted}    
+        puts "#\tChecking ${port_conflict} supplied files:"
+        foreach pattern ${unwanted} {
+            puts "#\tPattern: ${pattern}"
+            set conflict [exec find ${destroot} -regex .*/${pattern}]
+            if {[file exists ${conflict}]} {
+                puts "#\tConflict: ${conflict}"
+#                delete ${conflict}
+            }
+        }
+    }
+    puts "##########################################################"
+}
+
+post-install {
+    ui_msg "\nIf this your first install, you might want to"
+    ui_msg " * enable mod_perl in apache :\n"
+    ui_msg "cd ${prefix}/apache2/libexec"
+    ui_msg "${prefix}/apache2/bin/apxs -a -e -n \"perl\" mod_perl.so\n"	
+    ui_msg " * And then relaunch apache \n"
+    ui_msg "${prefix}/apache2/bin/apachectl restart\n"
+}
