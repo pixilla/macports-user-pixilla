@@ -20,7 +20,6 @@ long_description    TCPDF is a PHP class for generating PDF documents without re
 
 license             LGPL
 
-# http://cdnetworks-us-1.dl.sourceforge.net/project/tcpdf/tcpdf_5_9_078.zip
 use_zip             yes
 
 checksums           sha1    81176315dd9a98642c076fb0727ff7f92e9ae056 \
@@ -32,8 +31,6 @@ build               {}
 
 destroot {
     xinstall -d ${destroot}${prefix}/lib/php/pear
-#    puts ${worksrcpath}
-#    puts ${destroot}${prefix}/lib/php/pear/${name_package}
     copy ${worksrcpath} ${destroot}${prefix}/lib/php/pear/
     system "echo '<?php' > ${destroot}${prefix}/lib/php/pear/tcpdf.php"
     system "echo 'require_once(\"tcpdf/tcpdf.php\");' >> ${destroot}${prefix}/lib/php/pear/tcpdf.php"
