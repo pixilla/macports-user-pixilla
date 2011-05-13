@@ -1,0 +1,18 @@
+# -*- coding: utf-8; mode: tcl; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- vim:fenc=utf-8:ft=tcl:et:sw=4:ts=4:sts=4
+# $Id$
+
+PortSystem          1.0
+PortGroup           php5pear 1.0
+
+php5pear.setup      HTML_QuickForm_Renderer_Tableless 0.6.1
+categories-append   net www
+platforms           darwin
+maintainers         pixilla
+
+description         PEAR HTML_QuickForm_Renderer_Tableless package
+long_description    ${description}
+
+checksums           sha1    344594f2424152a5ad81cac8216fa972d6f41d57 \
+                    rmd160  79c129286ceed09327988adcdb1c87a601492532
+
+depends_lib-append  port:pear-HTML_QuickForm

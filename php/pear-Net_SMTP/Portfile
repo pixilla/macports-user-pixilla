@@ -1,0 +1,18 @@
+# -*- coding: utf-8; mode: tcl; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- vim:fenc=utf-8:ft=tcl:et:sw=4:ts=4:sts=4
+# $Id$
+
+PortSystem          1.0
+PortGroup           php5pear 1.0
+
+php5pear.setup      Net_SMTP 1.5.1
+categories-append   net www
+platforms           darwin
+maintainers         pixilla
+
+description         PEAR Net_SMTP package
+long_description    ${description}
+
+checksums           sha1    62edaea89d24cb93640aca6302e3b217adac88c6 \
+                    rmd160  09dd44309a49b4c7db2bf2b176efdbe1937f5fcb
+
+depends_lib-append  port:pear-Net_Socket

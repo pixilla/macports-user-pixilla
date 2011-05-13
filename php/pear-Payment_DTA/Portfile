@@ -1,0 +1,16 @@
+# -*- coding: utf-8; mode: tcl; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- vim:fenc=utf-8:ft=tcl:et:sw=4:ts=4:sts=4
+# $Id$
+
+PortSystem          1.0
+PortGroup           php5pear 1.0
+
+php5pear.setup      Payment_DTA 1.4.0
+categories-append   net www
+platforms           darwin
+maintainers         pixilla
+
+description         PEAR Payment_DTA package
+long_description    ${description}
+
+checksums           sha1    d90d9efbf3d4332c672434f2c4cfe8d10b103179 \
+                    rmd160  e77b3843b4c95ce6e9c97e3275afc87ac3a82a8f

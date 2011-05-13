@@ -1,0 +1,16 @@
+# -*- coding: utf-8; mode: tcl; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- vim:fenc=utf-8:ft=tcl:et:sw=4:ts=4:sts=4
+# $Id$
+
+PortSystem          1.0
+PortGroup           php5pear 1.0
+
+php5pear.setup      XML_Query2XML 1.7.1
+categories-append   net www
+platforms           darwin
+maintainers         pixilla
+
+description         PEAR XML_Query2XML package
+long_description    ${description}
+
+checksums           sha1    4ce2dba144d714ba9ae9e67f7d68ecad2769a614 \
+                    rmd160  ea7ff57bcbc5e16293db56371eedc97a45f76ac8
