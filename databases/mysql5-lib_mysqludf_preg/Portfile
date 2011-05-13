@@ -3,8 +3,11 @@
 
 PortSystem          1.0
 
-name                lib_mysqludf_preg
+set name_group      mysql5
+name                ${name_group}-lib_mysqludf_preg
+set name_package    [string map {"${name_group}-" ""} ${name}]
 version             1.0.1
+distname            ${name_package}-${version}
 categories          databases lang
 maintainers         pixilla
 platforms           darwin
@@ -17,8 +20,8 @@ long_description    {$description} The PCRE library is a set of functions that i
                     This syntax can often handle more complex expressions and capturing than \
                     standard regular expression implementations.
 
-homepage            http://webkit2pdf.sourceforge.net/
-master_sites        http://www.mysqludf.org/lib_mysqludf_preg/
+homepage            http://www.mysqludf.org/lib_mysqludf_preg/
+master_sites        ${homepage}
 
 checksums           sha1    a92a58a5c20b71723624da28ed3ee5670fe25405 \
                     rmd160  21dfbebe4b421da8acf4e14892fb272bee804f58
@@ -27,7 +30,7 @@ depends_lib-append  path:${prefix}/lib/mysql5/bin/mysql_config:mysql5
 
 configure.args-append \
                     --with-pcre=${prefix} \
-                    --with-mysql=${prefix}/lib/mysql5/bin/mysql_config
+                    --with-mysql=${prefix}/lib/${name_group}/bin/mysql_config
                     
 livecheck.url       ${master_sites}
 livecheck.type      regex
