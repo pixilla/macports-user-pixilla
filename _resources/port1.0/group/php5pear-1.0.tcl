@@ -63,7 +63,7 @@ proc php5pear.setup {php5pear.package version {php5pear.channel "pear.php.net"}}
     homepage            http://${php5pear.channel}/package/${php5pear.package}
     master_sites        http://${php5pear.channel}/get
     livecheck.type      regex
-    livecheck.url       http://pear.php.net/package/${php5pear.package}/download
+    livecheck.url       http://${php5pear.channel}/package/${php5pear.package}/download
     livecheck.regex     "http://download.${php5pear.channel}/package/${php5pear.package}-((?!\.tgz).*)${extract.suffix}"
 
     supported_archs     noarch

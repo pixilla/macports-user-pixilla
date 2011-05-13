@@ -19,7 +19,7 @@ master_sites        sourceforge
 checksums           sha1    bd4ecc533817f8e6ec2805fa659f0f206e586f7a \
                     rmd160  dd865e7882f4b9fef1cc44cb51fa21ac2c953658
 
-depends_lib-append  port:glib2
+depends_lib-append  port:glib2 port:gtk2
 
 livecheck.url       ${master_sites}
 livecheck.type      regex
