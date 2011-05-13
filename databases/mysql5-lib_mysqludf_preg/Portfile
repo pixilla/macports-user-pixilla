@@ -3,16 +3,16 @@
 
 PortSystem          1.0
 
-set name_group      mysql5
-name                ${name_group}-lib_mysqludf_preg
-set name_package    [string map {"${name_group}-" ""} ${name}]
+set version_mysql   5
+set name_package    lib_mysqludf_preg
+name                mysql${version_mysql}-${name_package}
 version             1.0.1
 distname            ${name_package}-${version}
 categories          databases lang
 maintainers         pixilla
 platforms           darwin
 
-description         lib_mysqludf_preg is a library of mysql UDFs (user-defined-functions) that \
+description         ${name_package} is a library of mysql UDFs (user-defined-functions) that \
                     provide access to the PCRE (perl compatible-regular-expressions) library for \
                     pattern matching.
 long_description    {$description} The PCRE library is a set of functions that implement regular \
@@ -26,12 +26,46 @@ master_sites        ${homepage}
 checksums           sha1    a92a58a5c20b71723624da28ed3ee5670fe25405 \
                     rmd160  21dfbebe4b421da8acf4e14892fb272bee804f58
 
-depends_lib-append  path:${prefix}/lib/mysql5/bin/mysql_config:mysql5
+depends_lib-append  path:${prefix}/lib/mysql${version_mysql}/bin/mysql_config:mysql${version_mysql}
 
 configure.args-append \
                     --with-pcre=${prefix} \
-                    --with-mysql=${prefix}/lib/${name_group}/bin/mysql_config
-                    
+                    --with-mysql=${prefix}/lib/mysql${version_mysql}/bin/mysql_config \
+                    --with-mysqlbin=${prefix}/bin/mysql${version_mysql} \
+                    --with-mysqladmin=${prefix}/bin/mysqladmin${version_mysql} \
+                    --with-mysqltest=${prefix}/bin/mysqltestc${version_mysql}
+
+post-destroot {
+    xinstall -m 755 -d ${destroot}${prefix}/share/mysql${version_mysql}/${name_package}
+    xinstall -m 755 -d ${destroot}${prefix}/share/mysql${version_mysql}/${name_package}/doc
+    xinstall -m 644 -W ${worksrcpath} \
+        AUTHORS COPYING ChangeLog INSTALL NEWS README installdb.sql uninstalldb.sql \
+        ${destroot}${prefix}/share/mysql${version_mysql}/${name_package}
+    copy ${worksrcpath}/doc/html \
+        ${destroot}${prefix}/share/mysql${version_mysql}/${name_package}/doc
+    copy ${worksrcpath}/test \
+        ${destroot}${prefix}/share/mysql${version_mysql}/${name_package}
+    delete ${destroot}${prefix}/share/mysql${version_mysql}/${name_package}/test/Makefile
+    delete ${destroot}${prefix}/share/mysql${version_mysql}/${name_package}/test/Makefile.am
+    delete ${destroot}${prefix}/share/mysql${version_mysql}/${name_package}/test/Makefile.in
+}
+
 livecheck.url       ${master_sites}
 livecheck.type      regex
-livecheck.regex     "${name}-(\\d+\\.\\d+(\[0-9rc.\]+)?)${extract.suffix}"
+livecheck.regex     "${name_package}-(\\d+\\.\\d+(\[\\drc.\]+)?)${extract.suffix}"
+
+notes "
+
+    This port installs two mysql scripts to simplify the install/uninstall of the ${name_package}
+    UDFs (user-defined-functions) along with html documentation describing the functions syntax.
+    
+    Install:
+    \$ ${prefix}/bin/mysql${version_mysql} -uroot -p < ${prefix}/share/mysql${version_mysql}/${name_package}/installdb.sql
+
+    Uninstall:
+    \$ ${prefix}/bin/mysql${version_mysql} -uroot -p < ${prefix}/share/mysql${version_mysql}/${name_package}/uninstalldb.sql
+    
+    HTML Documentation:
+    $ open ${prefix}/share/mysql${version_mysql}/${name_package}/doc/html/index.html
+    "
+    
