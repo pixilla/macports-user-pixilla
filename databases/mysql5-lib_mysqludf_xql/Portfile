@@ -4,32 +4,34 @@
 PortSystem          1.0
 
 set version_mysql   5
-set name_package    lib_mysqludf_preg
+set name_package    lib_mysqludf_xql
 name                mysql${version_mysql}-${name_package}
-version             1.0.1
+version             1.0.0
 distname            ${name_package}-${version}
 categories          databases lang
 maintainers         pixilla
 platforms           darwin
 
-description         ${name_package} is a library of mysql UDFs (user-defined-functions) that \
-                    provide access to the PCRE (perl compatible-regular-expressions) library for \
-                    pattern matching.
-long_description    ${description} The PCRE library is a set of functions that implement regular \
-                    expression pattern matching using the same syntax and semantics as Perl 5. \
-                    This syntax can often handle more complex expressions and capturing than \
-                    standard regular expression implementations.
+description         The lib_mysqludf_xql library provides an array of functions, which can be used \
+                    to create XML output directly from MySQL using a single SQL query.
+long_description    ${description} This prevents having to convert a MySQL result to XML in a PHP \
+                    script, Ruby script, etc. This improves performance and simplifies your code. \
+                    \
+                    The library provides the same functionality as SQL/XML, seen in MS SQL server \
+                    and Oracle. However it uses normal functions. By using subqueries the same \
+                    results as SQL/XML can be generated.
 
 homepage            http://www.mysqludf.org/${name_package}/
 master_sites        ${homepage}
 
-checksums           sha1    a92a58a5c20b71723624da28ed3ee5670fe25405 \
-                    rmd160  21dfbebe4b421da8acf4e14892fb272bee804f58
+checksums           sha1    5650c5daa67b80f90ba8d5a978c3f0baff470243 \
+                    rmd160  6750ca0e97ee096194c33703d0b35b645920a0ee
 
-depends_lib-append  path:${prefix}/lib/mysql${version_mysql}/bin/mysql_config:mysql${version_mysql}
+depends_lib-append  path:${prefix}/lib/mysql${version_mysql}/bin/mysql_config:mysql${version_mysql} \
+                    port:libxml2
 
 configure.args-append \
-                    --with-pcre=${prefix} \
+                    --with-libxml2=${prefix}/lib/xml2Conf.sh \
                     --with-mysql=${prefix}/lib/mysql${version_mysql}/bin/mysql_config \
                     --with-mysqlbin=${prefix}/bin/mysql${version_mysql} \
                     --with-mysqladmin=${prefix}/bin/mysqladmin${version_mysql} \
@@ -38,16 +40,10 @@ configure.args-append \
 post-destroot {
     xinstall -m 755 -d ${destroot}${prefix}/share/mysql${version_mysql}/${name_package}
     xinstall -m 644 -W ${worksrcpath} \
-        AUTHORS COPYING ChangeLog INSTALL NEWS README installdb.sql uninstalldb.sql \
+        API AUTHORS COPYING ChangeLog INSTALL NEWS README installdb.sql uninstalldb.sql \
         ${destroot}${prefix}/share/mysql${version_mysql}/${name_package}
-    xinstall -m 755 -d ${destroot}${prefix}/share/mysql${version_mysql}/${name_package}/doc
-    copy ${worksrcpath}/doc/html \
-        ${destroot}${prefix}/share/mysql${version_mysql}/${name_package}/doc
     copy ${worksrcpath}/test \
         ${destroot}${prefix}/share/mysql${version_mysql}/${name_package}
-    delete ${destroot}${prefix}/share/mysql${version_mysql}/${name_package}/test/Makefile
-    delete ${destroot}${prefix}/share/mysql${version_mysql}/${name_package}/test/Makefile.am
-    delete ${destroot}${prefix}/share/mysql${version_mysql}/${name_package}/test/Makefile.in
 }
 
 livecheck.url       ${master_sites}
@@ -57,7 +53,7 @@ livecheck.regex     "${name_package}-(\\d+\\.\\d+(\[\\drc.\]+)?)${extract.suffix
 notes "
 
     This port installs two mysql scripts to simplify the install/uninstall of the ${name_package}
-    UDFs (user-defined-functions) along with html documentation describing the functions syntax.
+    UDFs (user-defined-functions).
     
     Install:
     \$ ${prefix}/bin/mysql${version_mysql} -uroot -p < ${prefix}/share/mysql${version_mysql}/${name_package}/installdb.sql
@@ -65,7 +61,7 @@ notes "
     Uninstall:
     \$ ${prefix}/bin/mysql${version_mysql} -uroot -p < ${prefix}/share/mysql${version_mysql}/${name_package}/uninstalldb.sql
     
-    HTML Documentation:
-    $ open ${prefix}/share/mysql${version_mysql}/${name_package}/doc/html/index.html
+    API:
+    $ cat ${prefix}/share/mysql${version_mysql}/${name_package}/API
     "
     

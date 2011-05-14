@@ -41,16 +41,18 @@ configure.cppflags-append \
 build {
     set cmd "${configure.cc} ${configure.ldflags} ${configure.cflags} ${configure.cppflags}"
     system "cd ${worksrcpath} && ${cmd} ${name_package}.c -o ${name_package}.so"
-    reinplace "s/\.dll//g" $worksrcpath/lib_mysqludf_fPROJ4.sql
-    reinplace "s/'lib_mysqludf_fPROJ4'/'lib_mysqludf_fPROJ4.so'/g" $worksrcpath/lib_mysqludf_fPROJ4.sql
 
     xinstall -d ${worksrcpath}/macports
     set fp [open ${worksrcpath}/macports/installdb.sql w]
     puts $fp "USE mysql;"
-    puts $fp "CREATE FUNCTION lib_mysqludf_fPROJ4_info RETURNS STRING SONAME 'lib_mysqludf_fPROJ4.so';"
-    puts $fp "CREATE FUNCTION fPROJ4_transform RETURNS REAL SONAME 'lib_mysqludf_fPROJ4.so';"
-    puts $fp "CREATE FUNCTION fPROJ4_Geo2UTM RETURNS REAL SONAME 'lib_mysqludf_fPROJ4.so';"
-    puts $fp "CREATE FUNCTION fPROJ4_UTM2Geo RETURNS REAL SONAME 'lib_mysqludf_fPROJ4.so';"
+    puts $fp "DROP FUNCTION IF EXISTS lib_mysqludf_fPROJ4_info;"
+    puts $fp "DROP FUNCTION IF EXISTS fPROJ4_transform;"
+    puts $fp "DROP FUNCTION IF EXISTS fPROJ4_Geo2UTM;"
+    puts $fp "DROP FUNCTION IF EXISTS fPROJ4_UTM2Geo;"
+    puts $fp "CREATE FUNCTION lib_mysqludf_fPROJ4_info RETURNS STRING SONAME '${name_package}.so';"
+    puts $fp "CREATE FUNCTION fPROJ4_transform RETURNS REAL SONAME '${name_package}.so';"
+    puts $fp "CREATE FUNCTION fPROJ4_Geo2UTM RETURNS REAL SONAME '${name_package}.so';"
+    puts $fp "CREATE FUNCTION fPROJ4_UTM2Geo RETURNS REAL SONAME '${name_package}.so';"
     close $fp
 
     set fp [open ${worksrcpath}/macports/uninstalldb.sql w]
@@ -60,14 +62,12 @@ build {
     puts $fp "DROP FUNCTION IF EXISTS fPROJ4_Geo2UTM;"
     puts $fp "DROP FUNCTION IF EXISTS fPROJ4_UTM2Geo;"
     close $fp
-
-
 }
 
 destroot {
     xinstall -m 755 -d ${destroot}${prefix}/lib/mysql${version_mysql}/mysql/plugin
     xinstall -m 644 -W ${worksrcpath} \
-        lib_mysqludf_fPROJ4.so \
+        ${name_package}.so \
         ${destroot}${prefix}/lib/mysql${version_mysql}/mysql/plugin
     xinstall -m 755 -d ${destroot}${prefix}/share/mysql${version_mysql}/${name_package}
     xinstall -m 644 -W ${worksrcpath}/macports \
