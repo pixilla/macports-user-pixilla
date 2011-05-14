@@ -20,7 +20,7 @@ long_description    {$description} The PCRE library is a set of functions that i
                     This syntax can often handle more complex expressions and capturing than \
                     standard regular expression implementations.
 
-homepage            http://www.mysqludf.org/lib_mysqludf_preg/
+homepage            http://www.mysqludf.org/${name_package}/
 master_sites        ${homepage}
 
 checksums           sha1    a92a58a5c20b71723624da28ed3ee5670fe25405 \
