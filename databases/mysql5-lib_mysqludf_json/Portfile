@@ -29,10 +29,11 @@ extract.mkdir       yes
 use_configure       no
 
 configure.cppflags-append \
-                    -I/opt/local/include/mysql5/mysql \
-                    -dynamiclib \
-                    -fno-common \
+                    -I${prefix}/include/mysql5/mysql \
+                    -bundle \
                     -undefined dynamic_lookup
+
+
 post-extract {
     move ${worksrcpath}/${name_package}.so \
             ${worksrcpath}/${name_package}.so.orig
