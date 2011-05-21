@@ -32,10 +32,9 @@ depends_lib-append  path:${prefix}/lib/mysql${version_mysql}/bin/mysql_config:my
 use_configure       no
 
 configure.cppflags-append \
-                    -I/opt/local/include/mysql5/mysql \
+                    -I${prefix}/include/mysql5/mysql \
                     -lproj \
-                    -dynamiclib \
-                    -fno-common \
+                    -bundle \
                     -undefined dynamic_lookup
 
 build {
