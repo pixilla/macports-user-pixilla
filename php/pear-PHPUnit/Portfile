@@ -4,7 +4,7 @@
 PortSystem          1.0
 PortGroup           php5pear 1.0
 
-php5pear.setup      PHPUnit 1.3.2
+php5pear.setup      PHPUnit 3.5.13 pear.phpunit.de
 categories-append   net www
 platforms           darwin
 maintainers         pixilla
@@ -12,5 +12,5 @@ maintainers         pixilla
 description         PEAR PHPUnit package
 long_description    ${description}
 
-checksums           sha1    a89efdc0b724b747373cf12c945f7b8e5130ae2a \
-                    rmd160  c3b1d3c143c161c64e7de959fde6295d633b02af
+checksums           sha1    5441614f57d16920b45ecd778ce6711e2b12087c \
+                    rmd160  3ed936f15a2d1df6c652ac7a908d8eb6fcba785e
