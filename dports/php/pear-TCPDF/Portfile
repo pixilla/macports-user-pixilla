@@ -1,0 +1,38 @@
+# -*- coding: utf-8; mode: tcl; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- vim:fenc=utf-8:ft=tcl:et:sw=4:ts=4:sts=4
+# $Id$
+
+PortSystem          1.0
+
+name                pear-TCPDF
+set name_package    [string map {"pear-" ""} [string tolower ${name}]]
+version             5.9.078
+distname            ${name_package}_[string map {"." "_"} ${version}]
+worksrcdir          ${name_package}
+categories-append   net www
+platforms           darwin
+maintainers         pixilla
+homepage            http://www.pearhub.org/projects/TCPDF/
+master_sites        sourceforge:project/tcpdf
+
+description         TCPDF is a PHP class for generating PDF documents
+long_description    TCPDF is a PHP class for generating PDF documents without requiring external \
+                    extensions. TCPDF Supports UTF-8, Unicode, RTL languages and HTML.
+
+license             LGPL
+
+use_zip             yes
+
+checksums           sha1    81176315dd9a98642c076fb0727ff7f92e9ae056 \
+                    rmd160  101aafcce00b07186a4678f652564243590548bf
+
+use_configure       no
+
+build               {}
+
+destroot {
+    xinstall -d ${destroot}${prefix}/lib/php/pear
+    copy ${worksrcpath} ${destroot}${prefix}/lib/php/pear/
+    system "echo '<?php' > ${destroot}${prefix}/lib/php/pear/tcpdf.php"
+    system "echo 'require_once(\"tcpdf/tcpdf.php\");' >> ${destroot}${prefix}/lib/php/pear/tcpdf.php"
+    system "echo '?>' >> ${destroot}${prefix}/lib/php/pear/tcpdf.php"
+}

@@ -1,0 +1,19 @@
+# -*- coding: utf-8; mode: tcl; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- vim:fenc=utf-8:ft=tcl:et:sw=4:ts=4:sts=4
+# $Id$
+
+PortSystem          1.0
+PortGroup           php5pear 1.0
+
+php5pear.setup      Mail_Queue 1.2.6
+categories-append   net www
+platforms           darwin
+maintainers         pixilla
+
+description         PEAR Mail_Queue package
+long_description    ${description}
+
+checksums           sha1    82a9dbb33525f105b3a2dfb40fb82f877bf28122 \
+                    rmd160  b9f9b9556d98d90596c2c18bffbcb17c34ef713e
+
+depends_lib-append  port:pear-Mail \
+                    port:pear-Mail_Mime

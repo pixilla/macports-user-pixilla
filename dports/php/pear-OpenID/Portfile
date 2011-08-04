@@ -1,0 +1,23 @@
+# -*- coding: utf-8; mode: tcl; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- vim:fenc=utf-8:ft=tcl:et:sw=4:ts=4:sts=4
+# $Id$
+
+PortSystem          1.0
+PortGroup           php5pear 1.0
+
+php5pear.setup      OpenID 0.3.1
+categories-append   net www
+platforms           darwin
+maintainers         pixilla
+
+description         PEAR OpenID package
+long_description    ${description}
+
+checksums           sha1    76e75ebc5b58ec0a72159ed6ed6ee6ab11a7e7b0 \
+                    rmd160  82d30b1d2cfa9d69c3c2b8b09400e16e547fd6ab
+
+depends_lib-append  port:pear-PEAR \
+                    port:pear-HTTP_Request2 \
+                    port:pear-Cache_Lite \
+                    port:pear-Crypt_DiffieHellman \
+                    port:pear-Services_Yadis \
+                    port:pear-Net_URL2

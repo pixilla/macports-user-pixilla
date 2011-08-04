@@ -1,0 +1,16 @@
+# -*- coding: utf-8; mode: tcl; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- vim:fenc=utf-8:ft=tcl:et:sw=4:ts=4:sts=4
+# $Id$
+
+PortSystem          1.0
+PortGroup           php5pear 1.0
+
+php5pear.setup      Net_Growl 2.2.2
+categories-append   net www
+platforms           darwin
+maintainers         pixilla
+
+description         PEAR Net_Growl package
+long_description    ${description}
+
+checksums           sha1    3a9cc2b01f43fba5f4e994ca4d6275541792a79c \
+                    rmd160  3ff41b662ad05e6534c20203557335e5ecd085ad

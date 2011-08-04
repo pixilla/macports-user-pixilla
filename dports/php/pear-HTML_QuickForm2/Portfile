@@ -1,0 +1,18 @@
+# -*- coding: utf-8; mode: tcl; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- vim:fenc=utf-8:ft=tcl:et:sw=4:ts=4:sts=4
+# $Id$
+
+PortSystem          1.0
+PortGroup           php5pear 1.0
+
+php5pear.setup      HTML_QuickForm2 0.5.0
+categories-append   net www
+platforms           darwin
+maintainers         pixilla
+
+description         PEAR HTML_QuickForm2 package
+long_description    ${description}
+
+checksums           sha1    12897bedcdea9fff0ec95671cc9e47134588ec3d \
+                    rmd160  6badb148a466e06dfe5b36a5a1f247e49a2feb7b
+
+depends_lib-append  port:pear-HTML_Common2
