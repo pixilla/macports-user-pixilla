@@ -1,14 +1,15 @@
 #!/bin/bash
 
-[ -z $MAINTAINERS ] && MAINTAINERS="nomaintainer"
+[ ${MAINTAINERS+1} ] || MAINTAINERS="nomaintainer"
 extract_suffix='.tgz'
 package=${1}
 if [ "x${package}" == "x" ]
 then
     echo "Error: No package name given!"
-    echo "Try: \$ ${0} Auth"
-    echo "Or, for something other then the most recent version"
-    echo "Try: \$ ${0} Auth 0.3.1"
+    echo "Try something like:"
+    echo "  \$ MAINTAINERS=\"$(users) openmaintainer\" ${0} Auth"
+    echo "Or, for a version other than the most recent version"
+    echo "  \$ MAINTAINERS=\"$(users) openmaintainer\" ${0} Auth 0.3.1"
     exit 
 fi
 #echo "Package: ${package}"
