@@ -7,7 +7,7 @@ PortGroup           php5pear 1.0
 php5pear.setup      Net_LDAP2 2.0.11
 categories-append   net www
 platforms           darwin
-maintainers         pixilla
+maintainers         pixilla openmaintainer
 
 description         PEAR Net_LDAP2 package
 long_description    ${description}

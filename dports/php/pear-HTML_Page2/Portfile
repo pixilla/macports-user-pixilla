@@ -7,7 +7,7 @@ PortGroup           php5pear 1.0
 php5pear.setup      HTML_Page2 0.6.0beta
 categories-append   net www
 platforms           darwin
-maintainers         pixilla
+maintainers         pixilla openmaintainer
 
 description         PEAR HTML_Page2 package
 long_description    ${description}

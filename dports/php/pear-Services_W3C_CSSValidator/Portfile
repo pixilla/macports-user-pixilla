@@ -7,7 +7,7 @@ PortGroup           php5pear 1.0
 php5pear.setup      Services_W3C_CSSValidator 0.2.2
 categories-append   net www
 platforms           darwin
-maintainers         pixilla
+maintainers         pixilla openmaintainer
 
 description         PEAR Services_W3C_CSSValidator package
 long_description    ${description}

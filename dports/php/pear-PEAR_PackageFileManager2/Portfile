@@ -4,15 +4,15 @@
 PortSystem          1.0
 PortGroup           php5pear 1.0
 
-php5pear.setup      PEAR_PackageFileManager2 1.0.1
+php5pear.setup      PEAR_PackageFileManager2 1.0.2
 categories-append   net www
 platforms           darwin
-maintainers         pixilla
+maintainers         pixilla openmaintainer
 
 description         PEAR PEAR_PackageFileManager2 package
 long_description    ${description}
 
-checksums           sha1    b4180e964668582e7e1c1857457ab3fde7f9dcc4 \
-                    rmd160  945868b171293167e37a6b84feaa9d16553a2864
+checksums           sha1    5b332b83a3547ab99ec7aa0cec8d55fcd05ee590 \
+                    rmd160  c0d2b217af193cddd3d1e7b2e8fc7db7977c452b
 
 depends_lib-append  port:pear-PEAR_PackageFileManager_Plugins

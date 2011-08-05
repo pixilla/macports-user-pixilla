@@ -4,16 +4,16 @@
 PortSystem          1.0
 PortGroup           php5pear 1.0
 
-php5pear.setup      PEAR 1.9.2
+php5pear.setup      PEAR 1.9.4
 categories-append   net www
 platforms           darwin
-maintainers         pixilla
+maintainers         pixilla openmaintainer
 
 description         PEAR PEAR package
 long_description    ${description}
 
-checksums           sha1    1dda2c7c1c87532f6a45a54b98521a2e9efa02b3 \
-                    rmd160  f12b6a0a4600b0b227a88687c124b515621ca803
+checksums           sha1    7c4e88ae5064827507b2c9ae0108eb5972d900db \
+                    rmd160  8c57e069d305470a9313d1a617e6dd9b6d07ef08
 
 depends_lib-append  port:pear-Archive_Tar \
                     port:pear-Structures_Graph \

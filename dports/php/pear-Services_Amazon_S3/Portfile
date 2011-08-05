@@ -4,16 +4,16 @@
 PortSystem          1.0
 PortGroup           php5pear 1.0
 
-php5pear.setup      Services_Amazon_S3 0.3.1
+php5pear.setup      Services_Amazon_S3 0.3.5
 categories-append   net www
 platforms           darwin
-maintainers         pixilla
+maintainers         pixilla openmaintainer
 
 description         PEAR Services_Amazon_S3 package
 long_description    ${description}
 
-checksums           sha1    776e3acd04f02439de155609e98e822436f42f1c \
-                    rmd160  80e1f231b6831ab03ebc8d4ce7e1d5ae63fae6fa
+checksums           sha1    2cbdeedec7ca6e6fb00882b68c7b07e5b69c05b4 \
+                    rmd160  22a4ef91e72593a1dcefceb10b999733cd00f0aa
 
 depends_lib-append  port:pear-PEAR \
                     port:pear-Crypt_HMAC2 \

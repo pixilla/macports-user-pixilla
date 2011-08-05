@@ -7,7 +7,7 @@ PortGroup           php5pear 1.0
 php5pear.setup      DBA_Relational 0.2.0
 categories-append   net www
 platforms           darwin
-maintainers         pixilla
+maintainers         pixilla openmaintainer
 
 description         PEAR DBA_Relational package
 long_description    ${description}

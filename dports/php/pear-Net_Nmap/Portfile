@@ -7,7 +7,7 @@ PortGroup           php5pear 1.0
 php5pear.setup      Net_Nmap 1.0.3
 categories-append   net www
 platforms           darwin
-maintainers         pixilla
+maintainers         pixilla openmaintainer
 
 description         PEAR Net_Nmap package
 long_description    ${description}

@@ -7,7 +7,7 @@ PortGroup           php5pear 1.0
 php5pear.setup      Math_Finance 1.0.1
 categories-append   net www
 platforms           darwin
-maintainers         pixilla
+maintainers         pixilla openmaintainer
 
 description         PEAR Math_Finance package
 long_description    ${description}

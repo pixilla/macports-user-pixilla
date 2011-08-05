@@ -4,15 +4,15 @@
 PortSystem          1.0
 PortGroup           php5pear 1.0
 
-php5pear.setup      HTML_QuickForm_Renderer_Tableless 0.6.1
+php5pear.setup      HTML_QuickForm_Renderer_Tableless 0.6.2
 categories-append   net www
 platforms           darwin
-maintainers         pixilla
+maintainers         pixilla openmaintainer
 
 description         PEAR HTML_QuickForm_Renderer_Tableless package
 long_description    ${description}
 
-checksums           sha1    344594f2424152a5ad81cac8216fa972d6f41d57 \
-                    rmd160  79c129286ceed09327988adcdb1c87a601492532
+checksums           sha1    5ffac385b661a4acbbaeb75f26eec7200e7d6d41 \
+                    rmd160  34174284b0daa0ebe91a93b6303ee94b858db5ae
 
 depends_lib-append  port:pear-HTML_QuickForm

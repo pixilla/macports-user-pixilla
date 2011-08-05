@@ -7,7 +7,7 @@ PortGroup           php5pear 1.0
 php5pear.setup      Console_ProgressBar 0.5.2beta
 categories-append   net www
 platforms           darwin
-maintainers         pixilla
+maintainers         pixilla openmaintainer
 
 description         PEAR Console_ProgressBar package
 long_description    ${description}

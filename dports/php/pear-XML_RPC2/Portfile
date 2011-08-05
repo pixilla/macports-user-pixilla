@@ -4,16 +4,16 @@
 PortSystem          1.0
 PortGroup           php5pear 1.0
 
-php5pear.setup      XML_RPC2 1.0.8
+php5pear.setup      XML_RPC2 1.1.1
 categories-append   net www
 platforms           darwin
-maintainers         pixilla
+maintainers         pixilla openmaintainer
 
 description         PEAR XML_RPC2 package
 long_description    ${description}
 
-checksums           sha1    5b35d804bbe601cceca79274f6fbaa17e572fa89 \
-                    rmd160  beecf80673f32f2165a66ec14497de2a29e946a1
+checksums           sha1    5fbd4bcce5e05a8faf6f889f143cace0474d0b4e \
+                    rmd160  0de18a3edeaa0de05e34b59a7f48a261273d95ad
 
-depends_lib-append  port:pear-PEAR \
+depends_lib-append  port:pear-HTTP_Request2 \
                     port:pear-Cache_Lite

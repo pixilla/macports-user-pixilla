@@ -4,13 +4,13 @@
 PortSystem          1.0
 PortGroup           php5pear 1.0
 
-php5pear.setup      Archive_Zip 0.1.1
+php5pear.setup      Archive_Zip 0.1.2
 categories-append   net www
 platforms           darwin
-maintainers         pixilla
+maintainers         pixilla openmaintainer
 
 description         PEAR Archive_Zip package
 long_description    ${description}
 
-checksums           sha1    04d8e3c77875d802c627b3c78135878cee64edbb \
-                    rmd160  0706388e50c87d45fc0f49dae4f0410c9de9f48e
+checksums           sha1    9fcc3f2a2838b6d8be1243ed03306da3e80d0779 \
+                    rmd160  28db520733d2e9bf661aad8b9e6c5d0018e9cd4d

@@ -7,7 +7,7 @@ PortGroup           php5pear 1.0
 php5pear.setup      PHP_Compat 1.6.0a3
 categories-append   net www
 platforms           darwin
-maintainers         pixilla
+maintainers         pixilla openmaintainer
 
 description         PEAR PHP_Compat package
 long_description    ${description}

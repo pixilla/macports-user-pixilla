@@ -4,16 +4,16 @@
 PortSystem          1.0
 PortGroup           php5pear 1.0
 
-php5pear.setup      HTTP_OAuth 0.2.2
+php5pear.setup      HTTP_OAuth 0.2.3
 categories-append   net www
 platforms           darwin
-maintainers         pixilla
+maintainers         pixilla openmaintainer
 
 description         PEAR HTTP_OAuth package
 long_description    ${description}
 
-checksums           sha1    76a82e5bf62d0a9898a411ea572f92c3f7d3cb54 \
-                    rmd160  258a0999cc8720b9dccfb688dfda05a1c24af077
+checksums           sha1    e57e0f438dd5d8a18d46346765ad6a4585ba512c \
+                    rmd160  311382156cfc47cc05a107e2bad3e95f65b4bf63
 
 depends_lib-append  port:pear-PEAR \
                     port:pear-HTTP_Request2

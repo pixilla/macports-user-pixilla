@@ -7,12 +7,10 @@ PortGroup           php5pear 1.0
 php5pear.setup      PHP_Parser_DocblockParser 0.1.1
 categories-append   net www
 platforms           darwin
-maintainers         pixilla
+maintainers         pixilla openmaintainer
 
 description         PEAR PHP_Parser_DocblockParser package
 long_description    ${description}
 
 checksums           sha1    39409afa9d6280340574f0a28447dc75af8dc65f \
                     rmd160  6384a97f4c95e4dc7ab7da51141ab3220363b185
-
-depends_lib-append  port:php5-docblock

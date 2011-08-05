@@ -7,7 +7,7 @@ PortGroup           php5pear 1.0
 php5pear.setup      Net_Cyrus 0.3.2
 categories-append   net www
 platforms           darwin
-maintainers         pixilla
+maintainers         pixilla openmaintainer
 
 description         PEAR Net_Cyrus package
 long_description    ${description}

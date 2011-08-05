@@ -4,15 +4,15 @@
 PortSystem          1.0
 PortGroup           php5pear 1.0
 
-php5pear.setup      Net_SMTP 1.5.1
+php5pear.setup      Net_SMTP 1.6.0
 categories-append   net www
 platforms           darwin
-maintainers         pixilla
+maintainers         pixilla openmaintainer
 
 description         PEAR Net_SMTP package
 long_description    ${description}
 
-checksums           sha1    62edaea89d24cb93640aca6302e3b217adac88c6 \
-                    rmd160  09dd44309a49b4c7db2bf2b176efdbe1937f5fcb
+checksums           sha1    d2564f30e75e6fd5573303ee3622a17d41869fb5 \
+                    rmd160  bff4e4d1ff8a625f2fe09626a5b19a5defc8655a
 
 depends_lib-append  port:pear-Net_Socket

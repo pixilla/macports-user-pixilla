@@ -4,15 +4,15 @@
 PortSystem          1.0
 PortGroup           php5pear 1.0
 
-php5pear.setup      XML_RSS 1.0.1
+php5pear.setup      XML_RSS 1.0.2
 categories-append   net www
 platforms           darwin
-maintainers         pixilla
+maintainers         pixilla openmaintainer
 
 description         PEAR XML_RSS package
 long_description    ${description}
 
-checksums           sha1    dc8503d99dce29313230807f7e32900ce5a28036 \
-                    rmd160  8b82a26f25ef7cbc480dafdc635e5845207e93fa
+checksums           sha1    92e192abb5603960b2cc14eddb86270919c557c5 \
+                    rmd160  a25e711b6f33208dcb743253e586ec99903d6d75
 
 depends_lib-append  port:pear-XML_Parser

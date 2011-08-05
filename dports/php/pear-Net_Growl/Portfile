@@ -4,13 +4,13 @@
 PortSystem          1.0
 PortGroup           php5pear 1.0
 
-php5pear.setup      Net_Growl 2.2.2
+php5pear.setup      Net_Growl 2.3.0
 categories-append   net www
 platforms           darwin
-maintainers         pixilla
+maintainers         pixilla openmaintainer
 
 description         PEAR Net_Growl package
 long_description    ${description}
 
-checksums           sha1    3a9cc2b01f43fba5f4e994ca4d6275541792a79c \
-                    rmd160  3ff41b662ad05e6534c20203557335e5ecd085ad
+checksums           sha1    832af60a3f59bf030189bdf3232963ca648746af \
+                    rmd160  82dd06b34bd797b5e00ecbb3ccbe2e654c4deae1

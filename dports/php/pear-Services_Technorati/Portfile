@@ -7,7 +7,7 @@ PortGroup           php5pear 1.0
 php5pear.setup      Services_Technorati 0.7.1beta
 categories-append   net www
 platforms           darwin
-maintainers         pixilla
+maintainers         pixilla openmaintainer
 
 description         PEAR Services_Technorati package
 long_description    ${description}

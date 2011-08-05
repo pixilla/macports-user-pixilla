@@ -7,7 +7,7 @@ PortGroup           php5pear 1.0
 php5pear.setup      Services_W3C_HTMLValidator 1.0.0
 categories-append   net www
 platforms           darwin
-maintainers         pixilla
+maintainers         pixilla openmaintainer
 
 description         PEAR Services_W3C_HTMLValidator package
 long_description    ${description}

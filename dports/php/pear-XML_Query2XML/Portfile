@@ -4,13 +4,13 @@
 PortSystem          1.0
 PortGroup           php5pear 1.0
 
-php5pear.setup      XML_Query2XML 1.7.1
+php5pear.setup      XML_Query2XML 1.7.2
 categories-append   net www
 platforms           darwin
-maintainers         pixilla
+maintainers         pixilla openmaintainer
 
 description         PEAR XML_Query2XML package
 long_description    ${description}
 
-checksums           sha1    4ce2dba144d714ba9ae9e67f7d68ecad2769a614 \
-                    rmd160  ea7ff57bcbc5e16293db56371eedc97a45f76ac8
+checksums           sha1    b5d610663d177e9cf71a4677071619edf0823f45 \
+                    rmd160  9b00c0d1af904fed157812473cad43d9a7655f21

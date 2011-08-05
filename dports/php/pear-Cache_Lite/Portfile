@@ -4,15 +4,15 @@
 PortSystem          1.0
 PortGroup           php5pear 1.0
 
-php5pear.setup      Cache_Lite 1.7.9
+php5pear.setup      Cache_Lite 1.7.11
 categories-append   net www
 platforms           darwin
-maintainers         pixilla
+maintainers         pixilla openmaintainer
 
 description         PEAR Cache_Lite package
 long_description    ${description}
 
-checksums           sha1    1daae99bbd116f1b666e1f8a45e903c0ced54592 \
-                    rmd160  a3207bfd292c4d2affc41b7c52bfff9f11309f5b
+checksums           sha1    e50fa9297e610bf3cf96b20fdf4c4a90f58b9e21 \
+                    rmd160  0fd9884541e153bd8467208655b92dd197c33ed5
 
 depends_lib-append  port:pear-PEAR

@@ -7,10 +7,13 @@ PortGroup           php5pear 1.0
 php5pear.setup      File 1.4.0
 categories-append   net www
 platforms           darwin
-maintainers         pixilla
+maintainers         pixilla openmaintainer
 
 description         PEAR File package
 long_description    ${description}
 
 checksums           sha1    1e61adcfd42d1606af89ec2e236604e5708aa4e1 \
                     rmd160  0b0f836b5f2948549e27d43b1086e33cfde7602e
+
+depends_lib-append  port:pear-File_CSV \
+                    port:pear-File_Util

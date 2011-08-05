@@ -4,13 +4,13 @@
 PortSystem          1.0
 PortGroup           php5pear 1.0
 
-php5pear.setup      pearweb_phars 1.9.2
+php5pear.setup      pearweb_phars 1.9.4
 categories-append   net www
 platforms           darwin
-maintainers         pixilla
+maintainers         pixilla openmaintainer
 
 description         PEAR pearweb_phars package
 long_description    ${description}
 
-checksums           sha1    9b18883feb77070a621ee5bc5d04c79c36c185e6 \
-                    rmd160  5612a7e6d257334e378c4071d5229fa80ca0769e
+checksums           sha1    6b6b0073b2f9cce038edc2092b7e847dda222f6c \
+                    rmd160  fa7ab43fd1ec686d785280e11a372e5f7b5df866

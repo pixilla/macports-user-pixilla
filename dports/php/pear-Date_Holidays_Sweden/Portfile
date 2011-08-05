@@ -4,15 +4,15 @@
 PortSystem          1.0
 PortGroup           php5pear 1.0
 
-php5pear.setup      Date_Holidays_Sweden 0.1.2
+php5pear.setup      Date_Holidays_Sweden 0.1.3
 categories-append   net www
 platforms           darwin
-maintainers         pixilla
+maintainers         pixilla openmaintainer
 
 description         PEAR Date_Holidays_Sweden package
 long_description    ${description}
 
-checksums           sha1    88489d49af5d0482cfb293e68663423447de76c6 \
-                    rmd160  61f4001312d8c1b6cf74e101bb176f616a78bffe
+checksums           sha1    a1a9e64fd052bcae52318e83203b81d72253447f \
+                    rmd160  b82591a958f23fb7b1298383bed8ceb65907ba69
 
 depends_lib-append  port:pear-Date_Holidays

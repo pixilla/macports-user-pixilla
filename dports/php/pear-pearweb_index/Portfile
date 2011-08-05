@@ -4,16 +4,17 @@
 PortSystem          1.0
 PortGroup           php5pear 1.0
 
-php5pear.setup      pearweb_index 1.22.0
+php5pear.setup      pearweb_index 1.22.1
 categories-append   net www
 platforms           darwin
-maintainers         pixilla
+maintainers         pixilla openmaintainer
 
 description         PEAR pearweb_index package
 long_description    ${description}
 
-checksums           sha1    269e7a1a2d7856e6312f8cbe4639a83e7281e723 \
-                    rmd160  13ae8e39a60ebdcc5ac5811fb5ccac6b6a987a33
+checksums           sha1    3f2a72ec684c7e9c2441686cb1ca840240c924c0 \
+                    rmd160  1070cdf3cd93bce6d40f8002782a869d38d26f59
 
-depends_lib-append  port:pear-pearweb_pepr \
+depends_lib-append  port:pear-pearweb_qa \
+                    port:pear-pearweb_pepr \
                     port:pear-pearweb

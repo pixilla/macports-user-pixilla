@@ -7,7 +7,7 @@ PortGroup           php5pear 1.0
 php5pear.setup      CodeGen 1.0.7
 categories-append   net www
 platforms           darwin
-maintainers         pixilla
+maintainers         pixilla openmaintainer
 
 description         PEAR CodeGen package
 long_description    ${description}

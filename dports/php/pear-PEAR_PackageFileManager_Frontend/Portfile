@@ -7,7 +7,7 @@ PortGroup           php5pear 1.0
 php5pear.setup      PEAR_PackageFileManager_Frontend 0.7.0
 categories-append   net www
 platforms           darwin
-maintainers         pixilla
+maintainers         pixilla openmaintainer
 
 description         PEAR PEAR_PackageFileManager_Frontend package
 long_description    ${description}

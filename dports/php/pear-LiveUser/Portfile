@@ -7,7 +7,7 @@ PortGroup           php5pear 1.0
 php5pear.setup      LiveUser 0.16.14
 categories-append   net www
 platforms           darwin
-maintainers         pixilla
+maintainers         pixilla openmaintainer
 
 description         PEAR LiveUser package
 long_description    ${description}

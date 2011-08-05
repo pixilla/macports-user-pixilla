@@ -4,15 +4,15 @@
 PortSystem          1.0
 PortGroup           php5pear 1.0
 
-php5pear.setup      Services_ReCaptcha 1.0.2
+php5pear.setup      Services_ReCaptcha 1.0.3
 categories-append   net www
 platforms           darwin
-maintainers         pixilla
+maintainers         pixilla openmaintainer
 
 description         PEAR Services_ReCaptcha package
 long_description    ${description}
 
-checksums           sha1    ac1cbc6c9f8248ab6672bd597eda8e2a3ee3d17a \
-                    rmd160  be6610a24ce665ec232f2dfc52a714d58d78d7f9
+checksums           sha1    fd1a9ab3540d335b9f1265f9288ae56e77d86ac3 \
+                    rmd160  136a98302ed0a9e05ff53fd9d13731cdcaa53171
 
 depends_lib-append  port:pear-HTTP_Request2

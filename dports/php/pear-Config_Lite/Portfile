@@ -4,13 +4,13 @@
 PortSystem          1.0
 PortGroup           php5pear 1.0
 
-php5pear.setup      Config_Lite 0.1.1
+php5pear.setup      Config_Lite 0.1.2
 categories-append   net www
 platforms           darwin
-maintainers         pixilla
+maintainers         pixilla openmaintainer
 
 description         PEAR Config_Lite package
 long_description    ${description}
 
-checksums           sha1    b5212dc2b174e4d2255a2cf5f3eeda35934b9a43 \
-                    rmd160  7c20903b06caa8d7645ff910ba56a059dc7d9941
+checksums           sha1    9e4056de14699c0e290a8dbc736771650f0ab471 \
+                    rmd160  251a90cb560174e8efd4fcc1d23bfdf966584a70

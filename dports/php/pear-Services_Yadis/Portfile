@@ -7,7 +7,7 @@ PortGroup           php5pear 1.0
 php5pear.setup      Services_Yadis 0.5.1
 categories-append   net www
 platforms           darwin
-maintainers         pixilla
+maintainers         pixilla openmaintainer
 
 description         PEAR Services_Yadis package
 long_description    ${description}
@@ -16,5 +16,11 @@ checksums           sha1    5dc9de02f7b80e02a69d4b01a9631026a0eb8c1e \
                     rmd160  cbaa2bca9a50139475d077940d7b562fc7425cd0
 
 depends_lib-append  port:pear-HTTP_Request2 \
+                    port:pear-Validate \
+                    port:pear-Net_URL2 \
+                    port:pear-HTTP_Request2 \
+                    port:pear-Validate \
+                    port:pear-Net_URL2 \
+                    port:pear-HTTP_Request2 \
                     port:pear-Validate \
                     port:pear-Net_URL2

@@ -7,7 +7,7 @@ PortGroup           php5pear 1.0
 php5pear.setup      OLE 1.0.0RC1
 categories-append   net www
 platforms           darwin
-maintainers         pixilla
+maintainers         pixilla openmaintainer
 
 description         PEAR OLE package
 long_description    ${description}

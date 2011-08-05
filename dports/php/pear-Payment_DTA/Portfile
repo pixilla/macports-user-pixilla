@@ -4,13 +4,13 @@
 PortSystem          1.0
 PortGroup           php5pear 1.0
 
-php5pear.setup      Payment_DTA 1.4.0
+php5pear.setup      Payment_DTA 1.4.1
 categories-append   net www
 platforms           darwin
-maintainers         pixilla
+maintainers         pixilla openmaintainer
 
 description         PEAR Payment_DTA package
 long_description    ${description}
 
-checksums           sha1    d90d9efbf3d4332c672434f2c4cfe8d10b103179 \
-                    rmd160  e77b3843b4c95ce6e9c97e3275afc87ac3a82a8f
+checksums           sha1    962c6871457a7dd3a7061d3ff78da2ccd5b5db5e \
+                    rmd160  e836656c1e76847f2f23b181bf09e976bb677dc6

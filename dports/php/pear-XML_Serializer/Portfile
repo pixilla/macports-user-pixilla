@@ -7,7 +7,7 @@ PortGroup           php5pear 1.0
 php5pear.setup      XML_Serializer 0.20.2
 categories-append   net www
 platforms           darwin
-maintainers         pixilla
+maintainers         pixilla openmaintainer
 
 description         PEAR XML_Serializer package
 long_description    ${description}

@@ -7,7 +7,7 @@ PortGroup           php5pear 1.0
 php5pear.setup      PHP_UML 1.5.5
 categories-append   net www
 platforms           darwin
-maintainers         pixilla
+maintainers         pixilla openmaintainer
 
 description         PEAR PHP_UML package
 long_description    ${description}

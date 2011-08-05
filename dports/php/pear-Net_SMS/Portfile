@@ -4,13 +4,13 @@
 PortSystem          1.0
 PortGroup           php5pear 1.0
 
-php5pear.setup      Net_SMS 0.1.0
+php5pear.setup      Net_SMS 0.2.0
 categories-append   net www
 platforms           darwin
-maintainers         pixilla
+maintainers         pixilla openmaintainer
 
 description         PEAR Net_SMS package
 long_description    ${description}
 
-checksums           sha1    a2a3597fb8b3c94f37c261e72e55a6dfea9adf86 \
-                    rmd160  739d987d32ee107d3eb8c034be982bff3f815b1b
+checksums           sha1    d10f6057bad2fb27cbad740ea25f1bb1161ebf06 \
+                    rmd160  d3287e965d74d36383c1118e4502575a89b4188f

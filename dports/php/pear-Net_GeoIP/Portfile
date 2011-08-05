@@ -4,13 +4,13 @@
 PortSystem          1.0
 PortGroup           php5pear 1.0
 
-php5pear.setup      Net_GeoIP 1.0.0RC3
+php5pear.setup      Net_GeoIP 1.0.0
 categories-append   net www
 platforms           darwin
-maintainers         pixilla
+maintainers         pixilla openmaintainer
 
 description         PEAR Net_GeoIP package
 long_description    ${description}
 
-checksums           sha1    82e476ea071dfb9980adac97ececcf584b942bc4 \
-                    rmd160  09326fffe1cf1bd17125b7d48a892cf8dea90e88
+checksums           sha1    92ec7e0d48b7ca9ff77fc88baa6802dad4a9ca9d \
+                    rmd160  21780d11b4e7565595c12bd73ef57be46b70d605

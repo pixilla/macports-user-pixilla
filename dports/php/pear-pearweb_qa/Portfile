@@ -4,16 +4,16 @@
 PortSystem          1.0
 PortGroup           php5pear 1.0
 
-php5pear.setup      pearweb_qa 1.0.1
+php5pear.setup      pearweb_qa 1.0.2
 categories-append   net www
 platforms           darwin
-maintainers         pixilla
+maintainers         pixilla openmaintainer
 
 description         PEAR pearweb_qa package
 long_description    ${description}
 
-checksums           sha1    d7dce74068eac8a64fb111325e5d1cb15711e77c \
-                    rmd160  a1392f8ca321252ecb409d40e9ca06370cf8ec98
+checksums           sha1    6e7751781ad020f46daa47a47dea9615b2868758 \
+                    rmd160  32936c4afb1ff691ff8be257e03073be3da09eb1
 
 depends_lib-append  port:pear-PEAR \
                     port:pear-pearweb

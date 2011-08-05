@@ -7,7 +7,7 @@ PortGroup           php5pear 1.0
 php5pear.setup      Graph 1.5 components.ez.no
 categories-append   net www
 platforms           darwin
-maintainers         pixilla
+maintainers         pixilla openmaintainer
 homepage            http://phpsavant.com/
 
 description         PEAR Graph package
