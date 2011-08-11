@@ -1,0 +1,13 @@
+--- a/logrotate.c	2011-08-10 16:54:18.000000000 -0700
++++ b/logrotate.c	2011-08-10 17:24:49.000000000 -0700
+@@ -21,6 +21,10 @@
+ #include <sys/types.h>
+ #include <utime.h>
+ 
++#if defined(Darwin) 
++#include <limits.h>
++#endif
++
+ #if defined(SunOS)
+ #include <limits.h>
+ #endif

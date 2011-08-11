@@ -1,0 +1,85 @@
+# -*- coding: utf-8; mode: tcl; tab-width: 4; truncate-lines: t; indent-tabs-mode: nil; c-basic-offset: 4 -*- vim:fenc=utf-8:et:sw=4:ts=4:sts=4
+# $Id$
+
+PortSystem          1.0
+
+name                logrotate
+version             3.8.0
+categories          sysutils
+maintainers         markd pixilla.com:brad
+platforms           darwin
+
+description         Rotates, compresses, and mails system logs
+
+long_description    The logrotate utility is designed to simplify the administration of log files \
+                    on a system which generates a lot of log files. Logrotate allows for the \
+                    automatic rotation compression, removal and mailing of log files. Logrotate \
+                    can be set to handle a log file \daily, weekly, monthly or when the log file \
+                    gets to a certain size.
+
+homepage            https://fedorahosted.org/logrotate/
+master_sites        https://fedorahosted.org/releases/l/o/logrotate
+checksums           sha1    a79c500c4ce45177b47bb473a6bff4021af7121e \
+                    rmd160  7e1e24f53db5230eee2e1db8d90fe3a33692ca01
+
+livecheck.type      regex
+livecheck.url       ${master_sites}
+livecheck.regex     ${name}-(\\d+\\.\\d+(\\.\\d+)?)${extract.suffix}
+
+patchfiles          patch-Makefile.diff \
+                    patch-examples-logrotate-default.diff \
+                    patch-config.c.diff \
+                    patch-logrotate.c.diff
+patch.pre_args      -p1
+
+depends_run         port:popt port:gettext port:gzip
+
+use_configure       no
+
+set prefix_hack     [string trimleft ${destroot}${prefix} /]
+
+destroot.env-append BASEDIR="${prefix_hack}"
+
+build.env           BASEDIR="${prefix}" \
+                    POPT_DIR="${prefix}/include" \
+                    STATEFILE="${prefix}/var/run/logrotate/logrotate.status" \
+                    DEFAULT_MAIL_COMMAND="/usr/sbin/mail" \
+                    USEINSTALL="install"
+
+#build.args-append   LDFLAGS="-L${prefix}/lib"
+                    
+post-patch {
+	reinplace "s|@@PREFIX@@|${prefix}|g" \
+		${worksrcpath}/examples/logrotate-default
+}
+
+destroot.keepdirs   ${destroot}${prefix}/etc/logrotate.d \
+                    ${destroot}${prefix}/var/run/logrotate
+
+post-destroot {
+		xinstall -m 755 ${worksrcpath}/examples/logrotate-default \
+			${destroot}${prefix}/etc/logrotate.conf.sample
+    xinstall -d ${destroot}${prefix}/etc/logrotate.d
+    xinstall -d ${destroot}${prefix}/var/run/logrotate
+}
+
+post-activate {
+    delete  ${prefix}/etc/logrotate.d/.turd_${name} \
+            ${prefix}/var/run/logrotate/.turd_${name}
+}
+
+variant bzip2 description {change default compression to bzip} {
+    build.env-append    COMPRESS_COMMAND="${prefix}/bin/bzip2" \
+                        COMPRESS_EXT=".bz2" \
+                        UNCOMPRESS_COMMAND="${prefix}/bin/bunzip2"
+    depends_run-delete  port:gzip
+    depends_run-append  port:bzip2
+}
+
+default_variants    bzip2
+
+notes \
+"Copy ${prefix}/etc/logrotate.conf.sample to ${prefix}/etc/logrotate.conf for a start.
+Afterwards putting logrotate scripts in ${prefix}/etc/logrotate.d will cause them to 
+be executed with the following command:
+\$ ${prefix}/bin/${name} ${prefix}/etc/logrotate.conf"

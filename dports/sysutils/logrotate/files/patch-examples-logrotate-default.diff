@@ -1,0 +1,38 @@
+--- a/examples/logrotate-default	2011-08-10 16:54:18.000000000 -0700
++++ b/examples/logrotate-default	2011-08-10 17:08:36.000000000 -0700
+@@ -15,21 +15,21 @@
+ #compress
+ 
+ # RPM packages drop log rotation information into this directory
+-include /etc/logrotate.d
++include @@PREFIX@@/etc/logrotate.d
+ 
+ # no packages own wtmp and btmp -- we'll rotate them here
+-/var/log/wtmp {
+-    monthly
+-    create 0664 root utmp
+-	minsize 1M
+-    rotate 1
+-}
+-
+-/var/log/btmp {
+-    missingok
+-    monthly
+-    create 0600 root utmp
+-    rotate 1
+-}
++#/var/log/wtmp {
++#    monthly
++#    create 0664 root utmp
++#	minsize 1M
++#    rotate 1
++#}
++#
++#/var/log/btmp {
++#    missingok
++#    monthly
++#    create 0600 root utmp
++#    rotate 1
++#}
+ 
+ # system-specific logs may be also be configured here.

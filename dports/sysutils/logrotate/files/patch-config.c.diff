@@ -1,0 +1,56 @@
+--- a/config.c	2011-08-10 16:54:18.000000000 -0700
++++ b/config.c	2011-08-10 17:08:36.000000000 -0700
+@@ -163,34 +163,25 @@
+     size_t len;
+ 
+     if ((start = isolateValue(configFile, lineNum, key, startPtr, buf, length)) != NULL) {
+-
+-	chptr = start;
+-
+-	while( (len = mbrtowc(&pwc, chptr, strlen(chptr), NULL)) != 0 ) {
+-		if( len == (size_t)(-1) || len == (size_t)(-2) || !iswprint(pwc) || iswblank(pwc) ) {
+-		    message(MESS_ERROR, "%s:%d bad %s path %s\n",
+-			    configFile, lineNum, key, start);
+-		    return NULL;
+-		}
+-		chptr += len;
+-	}
+-
+-/*
+-	while (*chptr && isprint(*chptr) && *chptr != ' ')
+-	    chptr++;
+-	if (*chptr) {
+-	    message(MESS_ERROR, "%s:%d bad %s path %s\n",
+-		    configFile, lineNum, key, start);
+-	    return NULL;
+-	}
+-*/
+-
+-	path = strdup(start);
+-	free(start);
+-
+-	return path;
+-    } else
+-	return NULL;
++    
++      chptr = start;
++    
++      while (*chptr && isprint(*chptr) && *chptr != ' ') {
++        chptr++;
++      }
++      if (*chptr) {
++        message(MESS_ERROR, "%s:%d bad %s path %s\n",
++          configFile, lineNum, key, start);
++        return NULL;
++      }
++    
++      path = strdup(start);
++      free(start);
++    
++      return path;
++		} else {
++    	return NULL;
++    }
+ }
+ 
+ static char *readAddress(const char *configFile, int lineNum, char *key,
