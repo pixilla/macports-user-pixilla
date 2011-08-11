@@ -63,11 +63,13 @@ variant bzip2 conflicts gzip description {Use bzip2 compression by default} {
     build.env-append    COMPRESS_COMMAND="${prefix}/bin/bzip2" \
                         COMPRESS_EXT=".bz2" \
                         UNCOMPRESS_COMMAND="${prefix}/bin/bunzip2"
-    depends_run-delete  port:gzip
     depends_run-append  port:bzip2
 }
 
 variant gzip conflicts bzip2 description {Use gzip compression by default} {
+    build.env-append    COMPRESS_COMMAND="${prefix}/bin/gzip" \
+                        COMPRESS_EXT=".gz" \
+                        UNCOMPRESS_COMMAND="${prefix}/bin/gunzip"
     depends_run-append  port:gzip
 }
 
