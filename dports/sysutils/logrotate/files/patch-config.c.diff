@@ -1,56 +1,32 @@
---- a/config.c	2011-08-10 16:54:18.000000000 -0700
-+++ b/config.c	2011-08-10 17:08:36.000000000 -0700
-@@ -163,34 +163,25 @@
-     size_t len;
+--- a/config.c	2011-08-11 13:50:02.000000000 -0700
++++ b/config.c	2011-08-11 13:13:41.000000000 -0700
+@@ -74,6 +74,29 @@
  
-     if ((start = isolateValue(configFile, lineNum, key, startPtr, buf, length)) != NULL) {
--
--	chptr = start;
--
--	while( (len = mbrtowc(&pwc, chptr, strlen(chptr), NULL)) != 0 ) {
--		if( len == (size_t)(-1) || len == (size_t)(-2) || !iswprint(pwc) || iswblank(pwc) ) {
--		    message(MESS_ERROR, "%s:%d bad %s path %s\n",
--			    configFile, lineNum, key, start);
--		    return NULL;
--		}
--		chptr += len;
--	}
--
--/*
--	while (*chptr && isprint(*chptr) && *chptr != ' ')
--	    chptr++;
--	if (*chptr) {
--	    message(MESS_ERROR, "%s:%d bad %s path %s\n",
--		    configFile, lineNum, key, start);
--	    return NULL;
--	}
--*/
--
--	path = strdup(start);
--	free(start);
--
--	return path;
--    } else
--	return NULL;
-+    
-+      chptr = start;
-+    
-+      while (*chptr && isprint(*chptr) && *chptr != ' ') {
-+        chptr++;
-+      }
-+      if (*chptr) {
-+        message(MESS_ERROR, "%s:%d bad %s path %s\n",
-+          configFile, lineNum, key, start);
-+        return NULL;
-+      }
-+    
-+      path = strdup(start);
-+      free(start);
-+    
-+      return path;
-+		} else {
-+    	return NULL;
-+    }
- }
+ #endif
  
- static char *readAddress(const char *configFile, int lineNum, char *key,
++#if !defined(strndup)
++char *strndup(const char *s, size_t n)
++{
++       size_t nAvail;
++       char *p;
++
++       if(!s)
++               return NULL;
++
++       /* min() */
++       nAvail = strlen(s) + 1;
++       if ( (n + 1) < nAvail)
++               nAvail = n + 1;
++
++       p = malloc(nAvail);
++       if (!p)
++               return NULL;
++       memcpy(p, s, nAvail);
++       p[nAvail - 1] = 0;
++       return p;
++}
++#endif
++
+ enum {
+ 	STATE_DEFAULT = 2,
+ 	STATE_SKIP_LINE = 4,
