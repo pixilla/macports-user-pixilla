@@ -29,7 +29,10 @@ livecheck.regex     ${name}-(\\d+\\.\\d+(\\.\\d+)?)${extract.suffix}
 patchfiles          patch-Makefile.diff \
                     patch-examples-logrotate-default.diff \
                     patch-config.c.diff \
-                    patch-logrotate.c.diff
+                    patch-config.h.diff \
+                    patch-logrotate.c.diff \
+                    patch-strndup.c.diff \
+                    patch-strndup.h.diff
 patch.pre_args      -p1
 
 depends_run         port:popt port:gettext port:gzip
