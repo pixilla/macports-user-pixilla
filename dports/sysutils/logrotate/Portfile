@@ -38,29 +38,25 @@ post-patch {
 
 use_configure       no
 
-build.env-append \
-                    CC="${configure.cc} [get_canonical_archflags]" \
+build.env           CC="${configure.cc} [get_canonical_archflags]" \
                     CXX="${configure.cxx} [get_canonical_archflags]" \
                     CPP="${configure.cpp} [get_canonical_archflags]" \
                     BASEDIR="${prefix}" \
                     POPT_DIR="${prefix}/include" \
                     STATEFILE="${prefix}/var/run/logrotate/logrotate.status" \
-                    DEFAULT_MAIL_COMMAND="/usr/sbin/mail" \
-                    USEINSTALL="install"
+                    DEFAULT_MAIL_COMMAND="/usr/sbin/mail"
 
-destroot.env-append BASEDIR=[string trimleft ${destroot}${prefix} /]
+destroot.env-append INSTALL="install" \
+                    BASEDIR=[string trimleft ${destroot}${prefix} /]
 destroot.keepdirs   ${destroot}${prefix}/etc/logrotate.d \
                     ${destroot}${prefix}/var/run/logrotate
 post-destroot {
-        xinstall -m 755 ${worksrcpath}/examples/logrotate-default \
-    ${destroot}${prefix}/etc/logrotate.conf.sample
-    xinstall -d ${destroot}${prefix}/etc/logrotate.d
-    xinstall -d ${destroot}${prefix}/var/run/logrotate
-}
-
-post-activate {
-#    delete  ${prefix}/etc/logrotate.d/.turd_${name} \
-#            ${prefix}/var/run/logrotate/.turd_${name}
+    xinstall -m 755 ${worksrcpath}/examples/logrotate-default \
+        ${destroot}${prefix}/etc/logrotate.conf.sample
+    move ${destroot}${prefix}/man/man5/logrotate.conf.5 \
+        ${destroot}${prefix}/share/man/man5/logrotate.conf.5
+    move ${destroot}${prefix}/man/man8/logrotate.8 \
+        ${destroot}${prefix}/share/man/man8/logrotate.8
 }
 
 variant bzip2 conflicts gzip description {Use bzip2 compression by default} {
