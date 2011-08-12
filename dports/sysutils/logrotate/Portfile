@@ -26,7 +26,7 @@ patch.pre_args      -p1
 patchfiles          patch-config.c.diff \
                     patch-Makefile.diff
 
-depends_run         port:popt port:gettext port:gzip
+depends_run         port:popt port:gettext
 
 post-extract {
     touch ${worksrcpath}/.depend
