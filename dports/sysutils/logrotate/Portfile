@@ -23,7 +23,8 @@ checksums           sha1    a79c500c4ce45177b47bb473a6bff4021af7121e \
                     rmd160  7e1e24f53db5230eee2e1db8d90fe3a33692ca01
 
 patch.pre_args      -p1
-patchfiles          patch-config.c.diff
+patchfiles          patch-config.c.diff \
+                    patch-Makefile.diff
 
 depends_run         port:popt port:gettext port:gzip
 
@@ -38,7 +39,7 @@ post-patch {
 
 use_configure       no
 
-build.env           CC="${configure.cc} [get_canonical_archflags]" \
+build.env-append    CC="${configure.cc} [get_canonical_archflags]" \
                     CXX="${configure.cxx} [get_canonical_archflags]" \
                     CPP="${configure.cpp} [get_canonical_archflags]" \
                     BASEDIR="${prefix}" \
@@ -46,31 +47,32 @@ build.env           CC="${configure.cc} [get_canonical_archflags]" \
                     STATEFILE="${prefix}/var/run/logrotate/logrotate.status" \
                     DEFAULT_MAIL_COMMAND="/usr/sbin/mail"
 
-destroot.env-append INSTALL="install" \
-                    BASEDIR=[string trimleft ${destroot}${prefix} /]
+destroot.args       INSTALL="install" \
+                    BASEDIR=[string trimleft ${destroot}${prefix} /] \
+                    MANDIR="${prefix}/share/man"
 destroot.keepdirs   ${destroot}${prefix}/etc/logrotate.d \
                     ${destroot}${prefix}/var/run/logrotate
 post-destroot {
     xinstall -m 755 ${worksrcpath}/examples/logrotate-default \
         ${destroot}${prefix}/etc/logrotate.conf.sample
-    move ${destroot}${prefix}/man/man5/logrotate.conf.5 \
-        ${destroot}${prefix}/share/man/man5/logrotate.conf.5
-    move ${destroot}${prefix}/man/man8/logrotate.8 \
-        ${destroot}${prefix}/share/man/man8/logrotate.8
 }
 
 variant bzip2 conflicts gzip description {Use bzip2 compression by default} {
-    build.env-append    COMPRESS_COMMAND="${prefix}/bin/bzip2" \
-                        COMPRESS_EXT=".bz2" \
-                        UNCOMPRESS_COMMAND="${prefix}/bin/bunzip2"
-    depends_run-append  port:bzip2
+    build.env-append \
+                    COMPRESS_COMMAND="${prefix}/bin/bzip2" \
+                    COMPRESS_EXT=".bz2" \
+                    UNCOMPRESS_COMMAND="${prefix}/bin/bunzip2"
+    depends_run-append \
+                    port:bzip2
 }
 
 variant gzip conflicts bzip2 description {Use gzip compression by default} {
-    build.env-append    COMPRESS_COMMAND="${prefix}/bin/gzip" \
-                        COMPRESS_EXT=".gz" \
-                        UNCOMPRESS_COMMAND="${prefix}/bin/gunzip"
-    depends_run-append  port:gzip
+    build.pre_args-append \
+                    COMPRESS_COMMAND="${prefix}/bin/gzip" \
+                    COMPRESS_EXT=".gz" \
+                    UNCOMPRESS_COMMAND="${prefix}/bin/gunzip"
+    depends_run-append \
+                    port:gzip
 }
 
 if {![variant_isset gzip]} {
