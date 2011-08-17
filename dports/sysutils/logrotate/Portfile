@@ -6,7 +6,7 @@ PortSystem          1.0
 name                logrotate
 version             3.8.0
 categories          sysutils
-maintainers         markd openmaintainer
+maintainers         pixilla openmaintainer
 platforms           darwin
 
 description         Rotates, compresses, and mails system logs
@@ -53,8 +53,61 @@ destroot.args       INSTALL="install" \
 destroot.keepdirs   ${destroot}${prefix}/etc/logrotate.d \
                     ${destroot}${prefix}/var/run/logrotate
 post-destroot {
-    xinstall -m 755 ${worksrcpath}/examples/logrotate-default \
-        ${destroot}${prefix}/etc/logrotate.conf.sample
+    xinstall -d ${destroot}${prefix}/share/${name}
+    set fp [open ${destroot}${prefix}/share/${name}/logrotate.conf.example w]
+    puts $fp \
+"# see \"man logrotate\" for details
+# rotate log files weekly
+weekly
+
+# keep 4 weeks worth of backlogs
+rotate 4
+
+# create new (empty) log files after rotating old ones
+create
+
+# use date as a suffix of the rotated file
+dateext
+
+# uncomment this if you want your log files compressed
+#compress
+
+# Drop log rotation information into this directory
+include ${prefix}/etc/logrotate.d"
+    close $fp
+
+    set fp [open ${destroot}${prefix}/share/${name}/org.macports.logrotate.plist.example w]
+    puts $fp \
+"<?xml version=\"1.0\" encoding=\"UTF-8\"?>
+<!DOCTYPE plist PUBLIC \"-//Apple//DTD PLIST 1.0//EN\" \"http://www.apple.com/DTDs/PropertyList-1.0.dtd\">
+<plist version=\"1.0\">
+<dict>
+	<key>Disabled</key>
+	<true/>
+	<key>Label</key>
+	<string>com.pixilla.logrotate</string>
+	<key>ProgramArguments</key>
+	<array>
+		<string>${prefix}/sbin/logrotate</string>
+		<string>${prefix}/etc/logrotate.conf</string>
+	</array>
+	<key>StartCalendarInterval</key>
+	<dict>
+		<key>Hour</key>
+		<integer>5</integer>
+		<key>Minute</key>
+		<integer>30</integer>
+	</dict>
+</dict>
+</plist>"
+    close $fp
+    if {[variant_isset startupitem]} {
+        xinstall -d ${destroot}${prefix}/etc/LaunchDaemons/org.macports.logrotate
+        xinstall -d ${destroot}/Library/LaunchDaemons
+        xinstall -m 755 ${destroot}${prefix}/share/${name}/org.macports.logrotate.plist.example \
+            ${destroot}${prefix}/etc/LaunchDaemons/org.macports.logrotate/org.macports.logrotate.plist
+        ln -sf "${prefix}/etc/LaunchDaemons/org.macports.logrotate/org.macports.logrotate.plist" "${destroot}/Library/LaunchDaemons/org.macports.logrotate.plist"
+    }
 }
 
 variant bzip2 conflicts gzip description {Use bzip2 compression by default} {
@@ -75,9 +128,15 @@ variant gzip conflicts bzip2 description {Use gzip compression by default} {
                     port:gzip
 }
 
-if {![variant_isset gzip]} {
-    default_variants +bzip2
-    variant_set bzip2
+variant startupitem description {Install launchd plist} {
+}
+
+default_variants    +startupitem
+
+if {![variant_isset bzip2]} {
+    default_variants-append \
+                    +gzip
+    variant_set     gzip
 }
 
 livecheck.type      regex
@@ -85,8 +144,31 @@ livecheck.url       ${master_sites}
 livecheck.regex     ${name}-(\\d+\\.\\d+(\\.\\d+)?)${extract.suffix}
 
 notes \
-"Copy ${prefix}/etc/logrotate.conf.sample to ${prefix}/etc/logrotate.conf for a start:
-\$ cp ${prefix}/etc/logrotate.conf.sample ${prefix}/etc/logrotate.conf
-Afterwards putting logrotate scripts in ${prefix}/etc/logrotate.d will cause them to 
-be executed with the following command:
-\$ ${prefix}/bin/${name} ${prefix}/etc/logrotate.conf"
+"
+
+To use logrotate:
+
+  * If ${prefix}/etc/logrotate.conf does not exist copy the example into place.
+
+    \$ sudo cp ${prefix}/share/${name}/logrotate.conf.example ${prefix}/etc/logrotate.conf
+
+  * logrotate scripts added to ${prefix}/etc/logrotate.d will read by default
+
+    \$ sudo ${prefix}/sbin/${name} ${prefix}/etc/logrotate.conf
+
+  * With the +startupitem variant you can activate a scheduled log rotation with this command.
+
+    \$ sudo port load Logrotate
+
+  * To create your own startup item with non-default intervals build; without the +startupitem
+    variant, copy the example into place and manually edit to your liking.
+
+    \$ sudo cp ${prefix}/share/${name}/org.macports.logrotate.plist.example\
+/Library/LaunchDaemons/org.macports.logrotate.plist
+
+    Once your /Library/LaunchDaemons/org.macports.logrotate.plist file is ready maunually load it
+    with this command.
+
+    \$ sudo launchctl load -w /Library/LaunchDaemons/org.macports.logrotate.plist
+    
+"
