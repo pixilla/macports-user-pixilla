@@ -7,7 +7,7 @@ PortGroup           php5pear 1.0
 php5pear.setup      PHPUnit2 2.3.6
 categories-append   net www
 platforms           darwin
-maintainers         pixilla
+maintainers         pixilla openmaintainer
 
 description         PEAR PHPUnit2 package
 long_description    ${description}

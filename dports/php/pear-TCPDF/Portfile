@@ -10,7 +10,7 @@ distname            ${name_package}_[string map {"." "_"} ${version}]
 worksrcdir          ${name_package}
 categories-append   net www
 platforms           darwin
-maintainers         pixilla
+maintainers         pixilla openmaintainer
 homepage            http://www.pearhub.org/projects/TCPDF/
 master_sites        sourceforge:project/tcpdf
 
