@@ -27,7 +27,7 @@ depends_lib-append  port:pear-PEAR \
                     port:pear-Services_ProjectHoneyPot \
                     port:pear-DB \
                     port:pear-DB_DataObject \
-                    port:channel:--phpsavant.com-Savant3 \
+                    port:pear-Savant3 \
                     port:pear-HTML_BBCodeParser \
                     port:pear-HTML_TagCloud \
                     port:pear-HTML_Table \
@@ -45,4 +45,4 @@ depends_lib-append  port:pear-PEAR \
                     port:pear-HTML_QuickForm2 \
                     port:pear-HTML_TreeMenu \
                     port:pear-MDB2_Driver_mysqli \
-                    port:channel:--components.ez.no-Graph
+                    port:pear-Graph
