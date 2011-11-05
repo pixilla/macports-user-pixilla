@@ -22,4 +22,4 @@ checksums           rmd160  1e64f0a0b0e19b03bed4803f1e0ec33a2921c037 \
                     sha256  aab36df119b88521baf7b3f9653e5b31492cb7fb7a2e11c00fa7aa95091ac9d3
 
 depends_build-append \
-                    port:php5-curl
+                    port:php5-curl port:php5-openssl
