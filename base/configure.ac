@@ -1,7 +1,7 @@
 dnl Process this file with autoconf to produce a configure script.
 dnl $Id$
 AC_PREREQ(2.63)
-AC_DEFUN([MACPORTS_VERSION_MACRO], [esyscmd(./getversion.sh)])
+AC_DEFUN([MACPORTS_VERSION_MACRO], [esyscmd(<config/macports_version tr -d '\n')])
 AC_INIT([MacPorts],MACPORTS_VERSION_MACRO,[macports-dev@lists.macosforge.org],[macports])
 AC_CONFIG_SRCDIR([src/pextlib1.0/Pextlib.c])
 AC_CONFIG_HEADERS([src/config.h])
@@ -10,8 +10,7 @@ AC_CANONICAL_TARGET
 
 # Read in the MacPorts version from the base/config/macports_version file
 AC_MSG_CHECKING(MacPorts version)
-MACPORTS_VERSION_PARTS_MACRO
-MACPORTS_VERSION=MACPORTS_VERSION_MACRO
+MACPORTS_VERSION=$($(dirname $0)/getversion.sh)
 AC_MSG_RESULT([$MACPORTS_VERSION])
 AC_SUBST(MACPORTS_VERSION)
 
