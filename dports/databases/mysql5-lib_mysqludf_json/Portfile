@@ -80,9 +80,9 @@ destroot {
         ${destroot}${prefix}/share/mysql${version_mysql}/${name_package}/doc/html/index.html
 }
 
-livecheck.url       ${master_sites}
+livecheck.url       [lindex ${master_sites} 0]
 livecheck.type      regex
-livecheck.regex     "${name_package}-(\\d+\\.\\d+(\[\\drc.\]+)?)${extract.suffix}"
+livecheck.regex     "href=.${name_package}_((?!\\${extract.suffix}).*)\\${extract.suffix}."
 
 notes "
 
