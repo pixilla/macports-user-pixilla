@@ -17,3 +17,5 @@ checksums               sha1    e259862e9decf0a820edf8bd58d9c77148180aa7 \
                         rmd160  297e41484f8f2ce1418527352900e9438bff25ed
 
 use_parallel_build      yes
+
+livecheck.regex     ">${php5extension.extensions}-(\[0-9.\]+)\\${extract.suffix}<"
