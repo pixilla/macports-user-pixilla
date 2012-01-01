@@ -1,0 +1,136 @@
+# -*- coding: utf-8; mode: tcl; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- vim:fenc=utf-8:ft=tcl:et:sw=4:ts=4:sts=4
+# $Id$
+
+PortSystem              1.0
+PortGroup               archcheck 1.0
+PortGroup               cmake 1.0
+
+name                    mysql55
+conflicts               mysql4 mysql5 mysql5-devel mariadb percona
+version                 5.5.19
+set branch              [join [lrange [split ${version} .] 0 1] .]
+set branch_name         [join [lrange [split ${version} .] 0 1] ""]
+categories              databases
+platforms               darwin
+maintainers             pixilla openmaintainer
+license                 GPL-2
+description             Multithreaded SQL database server
+long_description        MySQL is an open-source, multi-threaded SQL database with a command \
+                        syntax very similar to mSQL.
+
+homepage                http://www.mysql.com/
+master_sites \
+    http://mysql.mirrors.pair.com/Downloads/MySQL-${branch}/ \
+    http://mysql.he.net/Downloads/MySQL-${branch}/ \
+    http://mirrors.sunsite.dk/mysql/Downloads/MySQL-${branch}/ \
+    http://sunsite.informatik.rwth-aachen.de/mysql/Downloads/MySQL-${branch}/ \
+    http://mirror.facebook.net/mysql/Downloads/MySQL-${branch}/ \
+    http://ftp.plusline.de/mysql/Downloads/MySQL-${branch}/
+
+distname                mysql-${version}
+dist_subdir             mysql5
+use_parallel_build      yes
+
+patch.pre_args          -p1
+patchfiles              patch-sql-CMakeLists.txt.diff
+
+checksums               md5     a78cf450974e9202bd43674860349b5a \
+                        sha1    f6a3b5fb5a10f8110fd85463e1a25fb314e60c24 \
+                        rmd160  cae5bbea6d527ffb899eeeced8fc411375c285ae
+
+depends_lib-append      port:zlib \
+                        port:openssl \
+                        port:readline \
+                        port:cmake
+
+archcheck.files         lib/libz.dylib \
+                        lib/libssl.dylib \
+                        lib/libreadline.dylib
+
+set mysql               mysql${branch_name}
+set libdir              ${prefix}/lib/${mysql}
+set bindir              ${libdir}/bin
+set dbdir               ${prefix}/var/db/${mysql}
+set sysconfdir          ${prefix}/etc/${mysql}
+set sockfile            ${prefix}/var/run/mysql5/mysqld.sock
+
+if {"darwin" == ${os.platform} && ${os.major} > 8} {
+    set mysqluser       _mysql
+} else {
+    set mysqluser       mysql
+}
+
+configure.args-delete       -DCMAKE_INSTALL_NAME_DIR=${prefix}/lib
+configure.args-append       -DCMAKE_INSTALL_NAME_DIR:STRING=${libdir}/mysql \
+                            -DINSTALL_MANDIR:STRING=share/man \
+                            -DINSTALL_INFODIR:STRING=share/info \
+                            -DMYSQL_DATADIR:PATH=${dbdir} \
+                            -DFEATURE_SET:STRING=community \
+                            -DINSTALL_BINDIR:STRING=lib/${mysql}/bin \
+                            -DINSTALL_SCRIPTDIR:STRING=lib/${mysql}/bin \
+                            -DINSTALL_SBINDIR:STRING=lib/${mysql}/libexec \
+                            -DINSTALL_INCLUDEDIR:STRING=include/${mysql}/mysql \
+                            -DINSTALL_LIBDIR:STRING=lib/${mysql}/mysql \
+                            -DINSTALL_PLUGINDIR:STRING=lib/${mysql}/mysql/plugin \
+                            -DINSTALL_DOCDIR:STRING=share/doc/${mysql} \
+                            -DINSTALL_DOCREADMEDIR:STRING=share/doc/${mysql} \
+                            -DINSTALL_MYSQLDATADIR:STRING=${dbdir} \
+                            -DINSTALL_MYSQLSHAREDIR:STRING=share/${mysql}/mysql \
+                            -DINSTALL_SHAREDIR:STRING=share/${mysql} \
+                            -DINSTALL_SUPPORTFILESDIR:STRING=share/${mysql}/mysql \
+                            -DINSTALL_SQLBENCHDIR:STRING=${libdir} \
+                            -DINSTALL_MYSQLTESTDIR:STRING=${libdir} \
+                            -DDEFAULT_CHARSET:STRING=utf8 \
+                            -DDEFAULT_COLLATION:STRING=utf8_general_ci \
+                            -DMYSQL_UNIX_ADDR:PATH=${sockfile} \
+                            -DSYSCONFDIR:PATH=${sysconfdir} \
+                            -DWITH_EMBEDDED_SERVER:BOOL=OFF \
+                            -DWITH_READLINE:BOOL=ON \
+                            -DWITH_SSL:STRING=yes \
+                            -DWITH_ZLIB:STRING=system \
+                            -DWITH_UNIT_TESTS:BOOL=OFF \
+                            -DENABLE_GCOV:BOOL=OFF \
+                            -DENABLE_DTRACE:BOOL=OFF
+
+# Set compiler
+configure.compiler llvm-gcc-4.2
+
+post-build {
+    set dirs ${worksrcpath}
+    foreach dir ${dirs} {
+        reinplace -E {s|-arch [a-z0-9_]+||g} \
+            ${dir}/scripts/mysql_config \
+            ${dir}/scripts/mysqlbug
+    }
+}
+
+pre-destroot {
+    xinstall -m 755 -d ${destroot}${sysconfdir}
+    destroot.keepdirs-append ${destroot}${sysconfdir}
+}
+
+post-destroot {
+    # Fix paths in manpages and sample configuration files
+    foreach manpage [glob -type f ${destroot}${prefix}/share/man/man\[1-9\]/*] {
+        reinplace "s|/etc/my.cnf|${sysconfdir}/my.cnf|g" ${manpage}
+    }
+    foreach samp_conffile [glob -type f ${destroot}${prefix}/share/${mysql}/mysql/my-*.cnf] {
+        reinplace "s|/etc/my.cnf|${sysconfdir}/my.cnf|g" ${samp_conffile}
+    }
+    # Symlink mysql binaries into bin directory, with ${branch_name} appended to the name
+    foreach f [glob -tails -directory ${destroot}${bindir} my*] {
+        ln -sf ${bindir}/${f} ${destroot}${prefix}/bin/${f}${branch_name}
+    }
+}
+
+post-install {
+    if {![file exists ${prefix}/etc/LaunchDaemons/org.macports.${mysql}/org.macports.${mysql}.plist]} {
+        ui_msg "The MySQL client has been installed."
+        ui_msg "If you also want a MySQL server, install the mysql5-server-devel port."
+    }
+}
+
+livecheck.type          regex
+livecheck.version       [lindex [split ${version} -] 0]
+livecheck.url           http://dev.mysql.com/
+livecheck.regex         "<a href=\"http://dev.mysql.com/downloads/mysql/\[^\"\]+\">(${branch}(\.\[0-9.\]+)?)\[^<\]*</a>"
