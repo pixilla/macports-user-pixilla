@@ -6,7 +6,6 @@ PortGroup               archcheck 1.0
 PortGroup               cmake 1.0
 
 name                    mysql55
-conflicts               mysql4 mysql5 mysql5-devel mariadb percona
 version                 5.5.19
 set branch              [join [lrange [split ${version} .] 0 1] .]
 set branch_name         [join [lrange [split ${version} .] 0 1] ""]
@@ -34,18 +33,13 @@ use_parallel_build      yes
 patch.pre_args          -p1
 patchfiles              patch-sql-CMakeLists.txt.diff
 
-checksums               md5     a78cf450974e9202bd43674860349b5a \
-                        sha1    f6a3b5fb5a10f8110fd85463e1a25fb314e60c24 \
-                        rmd160  cae5bbea6d527ffb899eeeced8fc411375c285ae
+checksums               rmd160  cae5bbea6d527ffb899eeeced8fc411375c285ae \
+                        sha256  7f3643b378101de19205d133e6fb5ce03d8394e183f4e9ac2b0de59ba57fc34f
 
 depends_lib-append      port:zlib \
                         port:openssl \
                         port:readline \
                         port:cmake
-
-archcheck.files         lib/libz.dylib \
-                        lib/libssl.dylib \
-                        lib/libreadline.dylib
 
 set mysql               mysql${branch_name}
 set libdir              ${prefix}/lib/${mysql}
