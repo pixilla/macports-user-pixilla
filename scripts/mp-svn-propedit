@@ -1,0 +1,86 @@
+#!/bin/bash
+# Argument = [-q] <path name>
+
+usage()
+{
+cat << EOF
+
+usage: $(basename $0) options
+
+This script runs this command to edit svn commit messages:
+\$ svn propedit -r N --revprop svn:log URL
+where N is the revision number whose log message you wish to change, and URL 
+is the location of the repository. If you run this command from within a 
+working copy, you can leave off the URL.
+
+Example Usage:
+\$ $(basename $0) -r 79179 -u http://svn.macports.org/repository/macports/users/pixilla
+or
+\$ cd /opt/local/var/macports/sources/svn.macports.org/trunk/dports
+\$ $(basename $0) -r 79179 -e nano
+
+
+OPTIONS:
+    -h      Show this message.
+    -r      REVISION: number of svn log message to edit.
+    -u      URL: of svn repository.
+    -d      DIR: of svn repository.
+    -p      PORT: name. Will use "port file PORT" to get URL.
+    -e      Use this editor rather then your env editor. (your env editor is $EDITOR)
+
+EOF
+}
+
+[ -z $REVISION ] && REVISION=
+[ -z $URL ] && URL=
+[ -z $PORT ] && PORT=
+
+while getopts "hr:u:d:p:e" OPTION
+do
+#    echo "$OPTION" $OPTIND $OPTARG
+    case "${OPTION}" in
+        h)
+            usage
+            exit 1
+            ;;
+        r)
+            REVISION=$OPTARG
+            ;;
+        u)
+            URL=$OPTARG
+            ;;
+        d)
+            DIR=$OPTARG
+            ;;
+        p)
+            PORT=$OPTARG
+            ;;
+        e)
+            EDITOR=$OPTARG
+            ;;
+        ?)
+            usage
+            exit 1
+            ;;
+    esac
+done
+[[ ! -z $PORT && -z $DIR ]] && DIR=$(port file $PORT 2>/dev/null)
+[[ -z $DIR ]] && DIR=.
+[[ -z $URL ]] && URL=$(svn info "${DIR}" | grep ^URL: | awk '{print $2}')
+[[ -z $REVISION ]] && REVISION=$(svn info "${DIR}" | grep ^Revision: | awk '{print $2}')
+#echo $REVISION $PORT $DIR $URL ;exit 1
+if [[ -z $REVISION ]]
+then
+    echo "error: -r not set"
+    usage
+    exit 1
+fi
+
+if [[ -z $URL ]]
+then
+    echo "error: -u not set and you are not in an svn working copy"
+    usage
+    exit 1
+fi
+
+svn propedit -r "${REVISION}" --revprop svn:log "${URL}"
