@@ -4,6 +4,7 @@
 PortSystem              1.0
 PortGroup               archcheck 1.0
 PortGroup               cmake 1.0
+PortGroup               select 1.0
 
 name                    mysql55
 version                 5.5.19
@@ -27,7 +28,7 @@ master_sites \
     http://ftp.plusline.de/mysql/Downloads/MySQL-${branch}/
 
 distname                mysql-${version}
-dist_subdir             mysql5
+dist_subdir             ${name}
 use_parallel_build      yes
 
 patch.pre_args          -p1
@@ -40,19 +41,17 @@ depends_lib-append      port:zlib \
                         port:openssl \
                         port:readline \
                         port:cmake
+depends_run             port:mysql_select
+
+select.group            mysql
+select.file             ${filespath}/${name}
 
 set mysql               mysql${branch_name}
 set libdir              ${prefix}/lib/${mysql}
 set bindir              ${libdir}/bin
 set dbdir               ${prefix}/var/db/${mysql}
 set sysconfdir          ${prefix}/etc/${mysql}
-set sockfile            ${prefix}/var/run/mysql5/mysqld.sock
-
-if {"darwin" == ${os.platform} && ${os.major} > 8} {
-    set mysqluser       _mysql
-} else {
-    set mysqluser       mysql
-}
+set sockfile            ${prefix}/var/run/${mysql}/mysqld.sock
 
 configure.args-delete       -DCMAKE_INSTALL_NAME_DIR=${prefix}/lib
 configure.args-append       -DCMAKE_INSTALL_NAME_DIR:STRING=${libdir}/mysql \
@@ -117,12 +116,13 @@ post-destroot {
     }
 }
 
-post-install {
-    if {![file exists ${prefix}/etc/LaunchDaemons/org.macports.${mysql}/org.macports.${mysql}.plist]} {
-        ui_msg "The MySQL client has been installed."
-        ui_msg "If you also want a MySQL server, install the mysql5-server-devel port."
-    }
-}
+notes "
+
+    If you want to run the ${name} server install the ${name}-server port; which will create
+    the system user and group accounts and install the launchd plists to load and unload
+    the service.
+
+"
 
 livecheck.type          regex
 livecheck.version       [lindex [split ${version} -] 0]
