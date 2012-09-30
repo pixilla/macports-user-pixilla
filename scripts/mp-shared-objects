@@ -1,4 +1,7 @@
 #!/bin/bash
+# mp-shared-objects
+# Print path of linked objects and optionally test for their existence on disk.
+
 # Argument = [-q] <path name>
 
 eError="error: no such path"

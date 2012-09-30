@@ -1,0 +1,4 @@
+#!/bin/sh
+# mp-sqlite-registry
+EXECPATH=$(dirname $0)
+sqlite3 --init ${EXECPATH}/mp-sqlite-registry.init /opt/local/var/macports/registry/registry.db "$@" 2>&1 | tail +3

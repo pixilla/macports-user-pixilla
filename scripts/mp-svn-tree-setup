@@ -1,0 +1,82 @@
+#!/bin/bash
+# mp-svn-tree-setup
+
+# set date for file names
+DATE=$(date +%Y%m%d%H%M$S)
+
+# set MacPorts prefix if not in env
+[[ -z $MP_PREFIX ]] && MP_PREFIX=/opt/local
+
+# set local svn directory if not in env
+[[ -z $MP_SVNDIR ]] && MP_SVNDIR=$MP_PREFIX/var/macports/sources/svn.macports.org
+
+# set svn repo to get if not in env
+# If you want to build base set MP_SVNREPO to trunk (base, doc, doc-new, dports and www).
+[[ -z $MP_SVNREPO ]] && MP_SVNREPO=trunk/dports
+
+# temp sources.conf file if not in env
+[[ -z $MP_SRCCONFTEMP ]] && MP_SRCCONFTEMP=/tmp/sources.conf.$DATE
+
+if [ "x$1" = "xgo" ]; then
+
+    # create and cd to repository directory
+    sudo mkdir -p $MP_SVNDIR
+    sudo chown -R $(whoami) $MP_SVNDIR
+    cd $MP_SVNDIR
+    # checkout macports trunk
+    svn co https://svn.macports.org/repository/macports/$MP_SVNREPO $MP_SVNREPO
+    # create port index files
+    cd trunk/dports
+    portindex
+    # sources.conf: comment out rsync directories and save to $MP_SRCCONFTEMP
+    sudo sed 's;^rsync://rsync.macports.org;#rsync://rsync.macports.org;g' $MP_PREFIX/etc/macports/sources.conf > $MP_SRCCONFTEMP
+    # sources.conf: add svn dports to end of $MP_SRCCONFTEMP
+    echo "file://$MP_SVNDIR/trunk/dports [default]" >> $MP_SRCCONFTEMP
+    # sources.conf: move current sources.conf out of the way and move $MP_SRCCONFTEMP in place
+    sudo mv $MP_PREFIX/etc/macports/{sources.conf,sources.conf.$DATE}
+    sudo mv $MP_SRCCONFTEMP $MP_PREFIX/etc/macports/sources.conf
+elif [ "x$1" = "xshow" ]; then
+
+    cat <<EOF
+
+# create and cd to repository directory
+sudo mkdir -p $MP_SVNDIR
+sudo chown -R $(whoami) $MP_SVNDIR
+cd $MP_SVNDIR
+# checkout macports trunk
+svn co https://svn.macports.org/repository/macports/$MP_SVNREPO $MP_SVNREPO
+# create port index files
+cd trunk/dports
+portindex
+# sources.conf: comment out rsync directories and save to $MP_SRCCONFTEMP
+sudo sed 's;^rsync://rsync.macports.org;#rsync://rsync.macports.org;g' $MP_PREFIX/etc/macports/sources.conf > $MP_SRCCONFTEMP
+# sources.conf: add svn dports to end of $MP_SRCCONFTEMP
+echo "file://$MP_SVNDIR/trunk/dports [default]" >> $MP_SRCCONFTEMP
+# sources.conf: move current sources.conf out of the way and move $MP_SRCCONFTEMP in place
+sudo mv $MP_PREFIX/etc/macports/{sources.conf,sources.conf.$DATE}
+sudo mv $MP_SRCCONFTEMP $MP_PREFIX/etc/macports/sources.conf
+
+EOF
+
+else
+
+    echo ""
+    echo "# You can set these env vars to control this script"
+    echo "MP_PREFIX=$MP_PREFIX"
+    echo "MP_SVNDIR=$MP_SVNDIR"
+    echo "MP_SVNREPO=$MP_SVNREPO"
+    echo "MP_SRCCONFTEMP=$MP_SRCCONFTEMP"
+    echo ""
+    echo "# You can change these vars like so:"
+    echo "MP_PREFIX=/opt/macports-test $(basename ${0}) go"
+    echo ""
+    echo "# MP_PREFIX must be an existing MacPorts prefix. NO CHECKS ARE MADE!"
+    echo ""
+    echo "# To print the generated commands to stdout add 'show' as the first arg:"
+    echo "$(basename ${0}) show"
+    echo ""
+    echo "# To execute the generated commands add 'go' as the first arg:"
+    echo "$(basename ${0}) go"
+    echo ""
+    echo ""
+fi

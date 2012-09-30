@@ -1,4 +1,7 @@
 #!/bin/bash
+# mp-svn-propedit
+# Edit svn commit messages.
+
 # Argument = [-q] <path name>
 
 usage()

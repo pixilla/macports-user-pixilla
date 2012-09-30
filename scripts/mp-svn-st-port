@@ -1,0 +1,11 @@
+#!/bin/sh
+# mp-svn-st-port
+# Get svn st for "port dir <stdin>"
+CMD="port dir $@"
+#echo $CMD
+#exit
+#$CMD
+#exit
+for dir in $($CMD); do \
+    svn st ${dir}
+done

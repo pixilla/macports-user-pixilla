@@ -1,0 +1,22 @@
+#!/bin/bash
+# mp-upgrade-base
+: ${MP_PREFIX:="/opt/local"}
+: ${MP_SVNCMD:="/opt/local/bin/svn"}
+: ${MP_SVNTRUNK:="${MP_PREFIX}/var/macports/sources/svn.macports.org/trunk"}
+: ${MP_SVNBASE:="${MP_SVNTRUNK}/base"}
+echo "MP_SVNBASE=${MP_SVNBASE}"
+if [ "${MP_PREFIX}" = "/opt/local" ];then
+  CONFIGURE_ARGS="--prefix=${MP_PREFIX} --enable-readline"
+else
+  CONFIGURE_ARGS="--prefix=${MP_PREFIX} --enable-readline --with-tclpackage=${MP_PREFIX}/Library/Tcl --with-applications-dir=${MP_PREFIX}/Applications"
+fi
+echo "CONFIGURE_ARGS=${CONFIGURE_ARGS}"
+cd "${MP_SVNBASE}"
+${MP_SVNCMD} upgrade
+${MP_SVNCMD} up
+make distclean
+./configure ${CONFIGURE_ARGS}
+make
+sudo make install
+make distclean
+port version

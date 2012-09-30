@@ -1,0 +1,11 @@
+#!/bin/bash
+# mp-svn-up-dports
+# Set vars if not set.
+: ${MP_PREFIX:="/opt/local"}
+: ${MP_SVNCMD:="/opt/local/bin/svn"}
+: ${MP_SVNTRUNK:="${MP_PREFIX}/var/macports/sources/svn.macports.org/trunk"}
+: ${MP_SVNDPORTS:="${MP_SVNTRUNK}/dports"}
+echo "MP_SVNDPORTS=${MP_SVNDPORTS}"
+cd "${MP_SVNDPORTS}"
+${MP_SVNCMD} up
+portindex

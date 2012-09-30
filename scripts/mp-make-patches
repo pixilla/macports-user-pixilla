@@ -1,0 +1,46 @@
+#!/bin/sh
+# mp-make-patches
+if [[ $# -eq 0 || $1 == "help" ]]
+then
+    echo "Usage example:"
+    echo "cd $(port dir bash-completion)"
+    echo "sudo port extract"
+    echo "sudo cp -R ./work/$(port info --version bash-completion | sed -e 's,version: ,bash-completion-,') ./a"
+    echo "sudo cp -R ./a ./b"
+    echo "# Edit files in b"
+    echo "sudo bash -c 'echo 1234 > b/newfile'"
+    echo "mkdir ./files"
+    echo "mp-make-patches a b"
+    echo "# Example mp-make-patches stdout:"
+    echo "patch.pre_args      -p1"
+    echo "patchfiles          patch-newfile.diff"
+    echo "# Copy mp-make-patches stdout and paste into Portfile"
+    exit 1
+fi
+PROCESSED_FILES=0
+CHANGED_FILES=$(diff -Nqur -x "\.*" $1 $2 | awk '{print $2}' | sed "s;$1/;;" | sed 's/\([^ ]+\)/\1 /g')
+CHANGED_FILES=($CHANGED_FILES)
+COUNTER=0
+if [ ${#CHANGED_FILES[@]} -gt 0 ]
+then
+    echo "patch.pre_args      -p1"
+    while [  $COUNTER -lt ${#CHANGED_FILES[@]} ]
+    do
+        DIFF_NAME=$(echo ${CHANGED_FILES[$COUNTER]} | sed 's;/;-;g')
+        diff -Nu {$1,$2}/${CHANGED_FILES[$COUNTER]} > files/patch-$DIFF_NAME.diff
+        let COUNTER=COUNTER+1
+        if [ $COUNTER -eq ${#CHANGED_FILES[@]} ]
+        then
+            EOL=""
+        else
+            EOL=" \\"
+        fi
+        if [ $COUNTER -eq 1 ]
+        then
+            echo "patchfiles          patch-${DIFF_NAME}.diff${EOL}"
+        else
+            echo "                    patch-${DIFF_NAME}.diff${EOL}"
+        fi
+    done
+fi
+exit 0

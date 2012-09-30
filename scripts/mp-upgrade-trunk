@@ -1,0 +1,37 @@
+#!/bin/bash
+# mp-upgrade-trunk
+# Set vars if not set.
+: ${MP_PREFIX:="/opt/local"}
+: ${MP_SVNCMD:="/opt/local/bin/svn"}
+: ${MP_SVNTRUNK:="${MP_PREFIX}/var/macports/sources/svn.macports.org/trunk"}
+: ${MP_SVNDPORTS:="${MP_SVNTRUNK}/dports"}
+: ${MP_SVNBASE:="${MP_SVNTRUNK}/base"}
+echo "MP_PREFIX=${MP_PREFIX}"
+echo "MP_SVNCMD=${MP_SVNCMD}"
+echo "MP_SVNTRUNK=${MP_SVNTRUNK}"
+echo "MP_SVNDPORTS=${MP_SVNDPORTS}"
+echo "MP_SVNBASE=${MP_SVNBASE}"
+
+# svn upgrade and update trunk
+cd "${MP_SVNTRUNK}"
+${MP_SVNCMD} upgrade
+${MP_SVNCMD} up
+
+# build base
+cd "${MP_SVNBASE}"
+if [ "${MP_PREFIX}" = "/opt/local" ];then
+  CONFIGURE_ARGS="--prefix=${MP_PREFIX} --enable-readline"
+else
+  CONFIGURE_ARGS="--prefix=${MP_PREFIX} --enable-readline --with-tclpackage=${MP_PREFIX}/Library/Tcl --with-applications-dir=${MP_PREFIX}/Applications"
+fi
+echo "CONFIGURE_ARGS=${CONFIGURE_ARGS}"
+make distclean
+./configure ${CONFIGURE_ARGS}
+make
+sudo make install
+make distclean
+port version
+
+# update portindex
+cd "${MP_SVNDPORTS}"
+portindex

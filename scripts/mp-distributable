@@ -1,0 +1,9 @@
+#!/bin/bash
+# mp-distributable
+if [[ $# -eq 0 || $1 == "help" ]]
+then
+    echo "Usage example:"
+    echo "mp-distributable libz"
+    exit 1
+fi
+/opt/local/var/macports/sources/svn.macports.org/trunk/base/portmgr/jobs/port_binary_distributable.tcl -v "$@"
