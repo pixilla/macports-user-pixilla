@@ -7,11 +7,11 @@ if [ "x${package}" == "x" ]
 then
     echo "Error: No package name given!"
     echo "Try something like:"
-    echo "  \$ VERBOSE=yes MAINTAINERS=\"$(users) openmaintainer\" ${0} Auth"
+    echo "  \$ VERBOSE=yes MAINTAINERS=\"$(whoami) openmaintainer\" ${0} Auth"
     echo "To specify a channel (default pear.php.net)"
-    echo "  \$ VERBOSE=yes MAINTAINERS=\"$(users) openmaintainer\" ${0} Auth pear.php.net"
+    echo "  \$ VERBOSE=yes MAINTAINERS=\"$(whoami) openmaintainer\" ${0} Auth pear.php.net"
     echo "To specify a channel (required) and a version (defaults to current version)"
-    echo "  \$ VERBOSE=yes MAINTAINERS=\"$(users) openmaintainer\" ${0} Auth pear.php.net 0.3.1"
+    echo "  \$ VERBOSE=yes MAINTAINERS=\"$(whoami) openmaintainer\" ${0} Auth pear.php.net 0.3.1"
     exit 
 fi
 [ "x${VERBOSE}" == "xyes" ] && echo "Package: ${package}"
@@ -58,9 +58,9 @@ cat << EOF > Portfile
 # \$Id\$
 
 PortSystem          1.0
-PortGroup           php5pear 1.0
+PortGroup           pear 1.0
 
-php5pear.setup      ${package} ${version} ${channel}
+pear.setup          ${package} ${version} ${channel}
 categories-append   net www
 platforms           darwin
 maintainers         ${MAINTAINERS}
