@@ -1,9 +1,15 @@
 #!/bin/bash
 # mp-distributable
+
+: ${MP_PREFIX:="/opt/local"}
+: ${MP_SVNTRUNK:="${MP_PREFIX}/var/macports/sources/svn.macports.org/trunk"}
+: ${MP_SVNBASE:="${MP_SVNTRUNK}/base"}
+
+
 if [[ $# -eq 0 || $1 == "help" ]]
 then
     echo "Usage example:"
     echo "mp-distributable zlib"
     exit 1
 fi
-/opt/local/var/macports/sources/svn.macports.org/trunk/base/portmgr/jobs/port_binary_distributable.tcl -v "$@"
+${MP_SVNBASE}/portmgr/jobs/port_binary_distributable.tcl -v "$@"

@@ -1,5 +1,5 @@
 #!/bin/bash
-# mp-upgrade-base
+# mp-base-upgrade
 : ${MP_PREFIX:="/opt/local"}
 : ${MP_SVNCMD:="/opt/local/bin/svn"}
 : ${MP_SVNTRUNK:="${MP_PREFIX}/var/macports/sources/svn.macports.org/trunk"}

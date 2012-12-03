@@ -1,5 +1,5 @@
 #!/bin/bash
-# mp-upgrade-trunk-all
+# mp-trunk-upgrade-all
 . ~/.bash_profile
 # Store our active MP* function name.
 MP_PREOLD=$(MP-GET)
@@ -7,7 +7,7 @@ echo $MP_PREOLD
 # Call each MP* function followed by pm-upgrad-trunk
 for MPPRE in $(MP-LIST);do
   $MPPRE
-  mp-upgrade-trunk
+  mp-trunk-upgrade
 done
 # Call our original MP* function to end up where we started
 $MP_PREOLD

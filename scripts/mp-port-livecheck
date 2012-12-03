@@ -1,0 +1,17 @@
+#!/bin/bash
+# mp-port-livecheck
+if [[ $# -eq 0 || $1 == "help" ]]
+then
+    echo "mp-port-livecheck <stdin> # port -d livecheck $@"
+    echo "Usage example:"
+    echo "mp-port-livecheck zlib"
+    echo "mp-port-livecheck dependentof:zlib"
+    exit 1
+fi
+for port in $(port echo $@)
+do 
+    echo $port;
+    port -d livecheck $port 2>&1 | grep -E "cannot check|^$port" | awk '{if ($2 == "The") print "    "$(NF-1)" "$(NF);else if ($2 == "Port") print "    "$0;else print $0;}' | sed -e 's,DEBUG: ,,g' -e 's,Error: ,,g' | uniq;
+done
+
+exit 0

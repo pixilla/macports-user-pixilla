@@ -4,6 +4,8 @@
 
 # Argument = [-q] <path name>
 
+: ${MP_SVNCMD:="/opt/local/bin/svn"}
+
 usage()
 {
 cat << EOF
@@ -11,7 +13,7 @@ cat << EOF
 usage: $(basename $0) options
 
 This script runs this command to edit svn commit messages:
-\$ svn propedit -r N --revprop svn:log URL
+\$ ${MP_SVNCMD} propedit -r N --revprop svn:log URL
 where N is the revision number whose log message you wish to change, and URL 
 is the location of the repository. If you run this command from within a 
 working copy, you can leave off the URL.
@@ -69,8 +71,8 @@ do
 done
 [[ ! -z $PORT && -z $DIR ]] && DIR=$(port file $PORT 2>/dev/null)
 [[ -z $DIR ]] && DIR=.
-[[ -z $URL ]] && URL=$(svn info "${DIR}" | grep ^URL: | awk '{print $2}')
-[[ -z $REVISION ]] && REVISION=$(svn info "${DIR}" | grep ^Revision: | awk '{print $2}')
+[[ -z $URL ]] && URL=$(${MP_SVNCMD} info "${DIR}" | grep ^URL: | awk '{print $2}')
+[[ -z $REVISION ]] && REVISION=$(${MP_SVNCMD} info "${DIR}" | grep ^Revision: | awk '{print $2}')
 #echo $REVISION $PORT $DIR $URL ;exit 1
 if [[ -z $REVISION ]]
 then
@@ -86,4 +88,4 @@ then
     exit 1
 fi
 
-svn propedit -r "${REVISION}" --revprop svn:log "${URL}"
+${MP_SVNCMD} propedit -r "${REVISION}" --revprop svn:log "${URL}"

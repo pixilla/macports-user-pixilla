@@ -1,0 +1,22 @@
+#!/bin/bash
+
+if [ $# -lt 1 ]; then
+  echo "Usage:"
+  echo "mp-trac-tickets-port name:zlib"
+  exit
+fi
+
+PORTS=$(port echo "$@")
+QUERY="status=!closed&"
+OR=""
+for PORT in $PORTS;do
+    QUERY="${QUERY}${OR}port=${PORT}"
+    OR="&or&status=!closed&"
+done
+
+# If we are remote use curl else open
+if [ "${SSH_TTY+1}" ];then
+    curl -s "http://trac.macports.org/query?status=!closed&${QUERY}" | grep ' assigned\| closed\| new\| reopened\|href.*/ticket/' | sed -e 's|<[^>]*>||g'
+else
+    open "http://trac.macports.org/query?status=!closed&${QUERY}"
+fi

@@ -1,0 +1,9 @@
+#!/bin/sh
+# mp-find-in-Portfiles
+
+# Set vars if not set.
+: ${MP_PREFIX:="/opt/local"}
+: ${MP_SVNTRUNK:="${MP_PREFIX}/var/macports/sources/svn.macports.org/trunk"}
+: ${MP_SVNDPORTS:="${MP_SVNTRUNK}/dports"}
+
+find $MP_SVNDPORTS -maxdepth 3 -name Portfile -exec echo {} \; -exec grep -E -- "$@" {} \; | grep -B1 -v -E "/Portfile"

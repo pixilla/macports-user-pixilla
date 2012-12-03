@@ -4,18 +4,21 @@
 # set date for file names
 DATE=$(date +%Y%m%d%H%M$S)
 
+# set svn command
+: ${MP_SVNCMD:="/opt/local/bin/svn"}
+
 # set MacPorts prefix if not in env
-[[ -z $MP_PREFIX ]] && MP_PREFIX=/opt/local
+: ${MP_PREFIX:="/opt/local"}
 
 # set local svn directory if not in env
-[[ -z $MP_SVNDIR ]] && MP_SVNDIR=$MP_PREFIX/var/macports/sources/svn.macports.org
+: ${MP_SVNDIR:="${MP_PREFIX}/var/macports/sources/svn.macports.org"}
 
 # set svn repo to get if not in env
 # If you want to build base set MP_SVNREPO to trunk (base, doc, doc-new, dports and www).
-[[ -z $MP_SVNREPO ]] && MP_SVNREPO=trunk/dports
+: ${MP_SVNREPO:="trunk/dports"}
 
 # temp sources.conf file if not in env
-[[ -z $MP_SRCCONFTEMP ]] && MP_SRCCONFTEMP=/tmp/sources.conf.$DATE
+: ${MP_SRCCONFTEMP:="/tmp/sources.conf.${DATE}"}
 
 if [ "x$1" = "xgo" ]; then
 
@@ -24,7 +27,7 @@ if [ "x$1" = "xgo" ]; then
     sudo chown -R $(whoami) $MP_SVNDIR
     cd $MP_SVNDIR
     # checkout macports trunk
-    svn co https://svn.macports.org/repository/macports/$MP_SVNREPO $MP_SVNREPO
+    ${MP_SVNCMD} co https://svn.macports.org/repository/macports/$MP_SVNREPO $MP_SVNREPO
     # create port index files
     cd trunk/dports
     portindex
@@ -44,7 +47,7 @@ sudo mkdir -p $MP_SVNDIR
 sudo chown -R $(whoami) $MP_SVNDIR
 cd $MP_SVNDIR
 # checkout macports trunk
-svn co https://svn.macports.org/repository/macports/$MP_SVNREPO $MP_SVNREPO
+${MP_SVNCMD} co https://svn.macports.org/repository/macports/$MP_SVNREPO $MP_SVNREPO
 # create port index files
 cd trunk/dports
 portindex
@@ -62,6 +65,7 @@ else
 
     echo ""
     echo "# You can set these env vars to control this script"
+    echo "MP_SVNCMD=$MP_SVNCMD"
     echo "MP_PREFIX=$MP_PREFIX"
     echo "MP_SVNDIR=$MP_SVNDIR"
     echo "MP_SVNREPO=$MP_SVNREPO"

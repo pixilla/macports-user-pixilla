@@ -1,6 +1,6 @@
 #!/bin/sh
-# mp-svn-st-port
-# Get svn st for "port dir <stdin>"
+# mp-svn-log-port
+# Get svn log for "port dir <stdin>"
 : ${MP_SVNCMD:="/opt/local/bin/svn"}
 CMD="port dir $@ | sort -u"
 #echo "${CMD}"
@@ -8,4 +8,4 @@ CMD="port dir $@ | sort -u"
 DIRS=$(eval $CMD)
 #echo "${DIRS}"
 #exit
-${MP_SVNCMD} st ${DIRS}
+${MP_SVNCMD} log ${DIRS}

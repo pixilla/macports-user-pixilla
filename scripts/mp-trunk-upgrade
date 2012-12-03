@@ -1,5 +1,5 @@
 #!/bin/bash
-# mp-upgrade-trunk
+# mp-trunk-upgrade
 # Set vars if not set.
 : ${MP_PREFIX:="/opt/local"}
 : ${MP_SVNCMD:="/opt/local/bin/svn"}

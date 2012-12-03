@@ -1,4 +1,8 @@
 #!/bin/sh
 # mp-sqlite-registry
+
+# Set vars if not set.
+: ${MP_PREFIX:="/opt/local"}
+
 EXECPATH=$(dirname $0)
-sqlite3 --init ${EXECPATH}/mp-sqlite-registry.init /opt/local/var/macports/registry/registry.db "$@" 2>&1 | tail +3
+sqlite3 --init ${EXECPATH}/mp-sqlite-registry.init ${MP_PREFIX}/var/macports/registry/registry.db "$@" 2>&1 | tail +3

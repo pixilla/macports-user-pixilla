@@ -1,12 +1,13 @@
 #!/bin/sh
 # mp-trac-table-port
 # Make trac wiki formatted table of MacPorts ports matching "port echo <stdin>"
+: ${MP_SVNCMD:="/opt/local/bin/svn"}
 CMD="port echo $@"
 #echo $CMD
 #exit
 echo "||'''Port'''||'''Category'''||'''Repository'''||'''Tickets'''||"; \
 for name in $($CMD); do \
-    svn info $(port file $name) 2>&1 \
+    ${MP_SVNCMD} info $(port file $name) 2>&1 \
     | grep -B 20 -E "^Revision" \
     | grep -E '^URL: https?://svn.macports.org/repository/macports/' \
     | sed -E \

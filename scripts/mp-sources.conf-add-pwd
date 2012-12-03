@@ -1,0 +1,13 @@
+#!/bin/bash
+
+# Set vars if not set.
+: ${MP_PREFIX:="/opt/local"}
+: ${MP_SVNTRUNK:="${MP_PREFIX}/var/macports/sources/svn.macports.org/trunk"}
+: ${MP_SVNDPORTS:="${MP_SVNTRUNK}/dports"}
+
+DATE=`date +%Y%m%d%H%M%S`
+sudo cp ${MP_PREFIX}/etc/macports/sources.conf $(PWD)/sources-${DATE}.conf
+sed 's,^\([^#].*\[default\]\),file://'"$PWD"' [nosync]'$'\\\n''\1,' sources-${DATE}.conf > sources.conf
+sudo mv sources.conf ${MP_PREFIX}/etc/macports/sources.conf
+sudo mv sources-${DATE}.conf ${MP_PREFIX}/etc/macports/sources-${DATE}.conf
+sudo chown root:admin ${MP_PREFIX}/etc/macports/sources*

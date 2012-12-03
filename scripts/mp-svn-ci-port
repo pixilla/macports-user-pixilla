@@ -1,0 +1,12 @@
+#!/bin/sh
+# mp-svn-cu-port
+# svn commit for "port dir <stdin>"
+: ${MP_SVNCMD:="/opt/local/bin/svn"}
+CMD="port dir $@ | sort -u"
+#echo "${CMD}"
+#exit
+DIRS=$(eval $CMD)
+#echo "${DIRS}"
+#exit
+echo "${DIRS}" | awk -F/ '{print $(NF-1)"/"$NF":"}' | pbcopy
+${MP_SVNCMD} commit ${DIRS}

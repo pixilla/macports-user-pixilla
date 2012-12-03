@@ -1,0 +1,12 @@
+#!/bin/sh
+# mp-port-clean-find-work
+
+# Set vars if not set.
+: ${MP_PREFIX:="/opt/local"}
+: ${MP_SVNTRUNK:="${MP_PREFIX}/var/macports/sources/svn.macports.org/trunk"}
+: ${MP_SVNDPORTS:="${MP_SVNTRUNK}/dports"}
+
+DIRS=$(find $MP_SVNDPORTS -depth 3 -type l -name work -exec echo {} \; | awk -F/ '{print $(NF-2)"/"$(NF-1)}')
+for DIR in ${DIRS};do
+    sudo port clean $DIR
+done
