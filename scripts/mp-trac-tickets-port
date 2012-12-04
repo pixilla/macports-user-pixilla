@@ -6,7 +6,7 @@ if [ $# -lt 1 ]; then
   exit
 fi
 
-PORTS=$(port echo "$@")
+PORTS=$(port -q echo "$@")
 QUERY="status=!closed&"
 OR=""
 for PORT in $PORTS;do
