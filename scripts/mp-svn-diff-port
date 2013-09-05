@@ -1,7 +1,7 @@
 #!/bin/sh
 # mp-svn-diff-port
 # Get svn diff for "port dir <stdin>"
-: ${MP_SVNCMD:="/opt/local/bin/svn"}
+: ${MP_SVNCMD:=$(which svn)}
 CMD="port dir $@ | sort -u"
 #echo "${CMD}"
 #exit

@@ -2,7 +2,7 @@
 # mp-svn-up-trunk
 # Set vars if not set.
 : ${MP_PREFIX:="/opt/local"}
-: ${MP_SVNCMD:="/opt/local/bin/svn"}
+: ${MP_SVNCMD:=$(which svn)}
 : ${MP_SVNTRUNK:="${MP_PREFIX}/var/macports/sources/svn.macports.org/trunk"}
 echo "MP_PREFIX=${MP_PREFIX}"
 echo "MP_SVNTRUNK=${MP_SVNTRUNK}"

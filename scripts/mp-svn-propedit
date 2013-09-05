@@ -4,7 +4,7 @@
 
 # Argument = [-q] <path name>
 
-: ${MP_SVNCMD:="/opt/local/bin/svn"}
+: ${MP_SVNCMD:=$(which svn)}
 
 usage()
 {

@@ -1,7 +1,7 @@
 #!/bin/bash
 # mp-base-upgrade
 : ${MP_PREFIX:="/opt/local"}
-: ${MP_SVNCMD:="/opt/local/bin/svn"}
+: ${MP_SVNCMD:=$(which svn)}
 : ${MP_SVNTRUNK:="${MP_PREFIX}/var/macports/sources/svn.macports.org/trunk"}
 : ${MP_SVNBASE:="${MP_SVNTRUNK}/base"}
 echo "MP_SVNBASE=${MP_SVNBASE}"

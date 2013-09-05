@@ -5,7 +5,7 @@
 DATE=$(date +%Y%m%d%H%M$S)
 
 # set svn command
-: ${MP_SVNCMD:="/opt/local/bin/svn"}
+: ${MP_SVNCMD:=$(which svn)}
 
 # set MacPorts prefix if not in env
 : ${MP_PREFIX:="/opt/local"}
