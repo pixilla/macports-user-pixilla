@@ -6,4 +6,4 @@
 : ${MP_SVNTRUNK:="${MP_PREFIX}/var/macports/sources/svn.macports.org/trunk"}
 : ${MP_SVNDPORTS:="${MP_SVNTRUNK}/dports"}
 
-find $MP_SVNDPORTS -maxdepth 3 -name Portfile -exec echo {} \; -exec grep -E -- "$@" {} \; | grep -B1 -v -E "/Portfile"
+find $MP_SVNDPORTS -mindepth 3 -maxdepth 3 -name Portfile -exec echo {} \; -exec grep -E -- "$@" {} \; | grep -B1 -v -E "/Portfile"
