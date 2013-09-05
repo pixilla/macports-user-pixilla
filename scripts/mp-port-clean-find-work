@@ -8,5 +8,5 @@
 
 DIRS=$(find $MP_SVNDPORTS -depth 3 -type l -name work -exec echo {} \; | awk -F/ '{print $(NF-2)"/"$(NF-1)}')
 for DIR in ${DIRS};do
-    sudo port clean $DIR
+    sudo port clean $MP_SVNDPORTS/$DIR
 done
