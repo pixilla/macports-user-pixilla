@@ -23,6 +23,7 @@ OPTIONS:
     -p      Path or Port (requires -m) to check
     -m      Use -p as a port name rather then a path
     -c      Check if shared library exists, print "${eError}" if it does not
+    -a      Print arch
     -q      Quiet, only print errors, implies -c
     -s      Stop on errors
 
@@ -31,6 +32,7 @@ EOF
 
 [ -z $TYPE ] && TYPE=PATH
 [ -z $CHECK_EXISTS ] && CHECK_EXISTS=
+[ -z $PRINT_ARCH ] && PRINT_ARCH=
 [ -z $QUIET ] && QUIET=
 [ -z $STOP ] && STOP=
 
@@ -49,6 +51,9 @@ do
             ;;
         c)
             CHECK_EXISTS=yes
+            ;;
+        a)
+            PRINT_ARCH=yes
             ;;
         q)
             QUIET=yes
@@ -92,6 +97,7 @@ do
         if [[ ${#SHAREDLIBRARIES[@]} -gt 0 ]]
         then
             [ -z $QUIET ] && echo "${FILES[$fc]}"
+            [ -z $PRINT_ARCH ] && lipo -info "${FILES[$fc]}"
             for (( sc = 0 ; sc < ${#SHAREDLIBRARIES[@]} ; sc++ ))
             do
                 if [ ! -f "${SHAREDLIBRARIES[$sc]}" ]
@@ -101,6 +107,7 @@ do
                     [ "${STOP}" == "yes" ] && break 2
                 else
                     [ -z $QUIET ] && echo -e "\t${SHAREDLIBRARIES[$sc]}"
+                    [ -z $PRINT_ARCH ] && lipo -info "${SHAREDLIBRARIES[$sc]}"
                 fi
             done
         fi
@@ -109,5 +116,6 @@ done
 unset IFS
 unset NAME
 unset CHECK_EXISTS
+unset PRINT_ARCH
 unset QUIET
 
