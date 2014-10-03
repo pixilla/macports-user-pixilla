@@ -1,0 +1,28 @@
+#!/bin/sh
+# mp-svn-log-port
+# Get svn blame for "port dir <stdin>"
+: ${MP_SVNCMD:=$(which svn)}
+MP_CMD="port dir $@ | sort -u"
+# echo "MP_CMD: ${MP_CMD}"
+# exit
+MP_DIRS=$(eval $MP_CMD)
+# echo "MP_DIRS: ${MP_DIRS}"
+# exit
+for MP_DIR in $MP_DIRS; do
+# echo "MP_DIR: ${MP_DIR}"
+    MP_DPORTS="${MP_DIR%/*/*}"
+    MP_PORTPARENT="${MP_DIR##*/}"
+    MP_PORTCAT="${MP_DIR%/*}"
+    MP_PORTDIR="${MP_PORTCAT##*/}/${MP_PORTPARENT}"
+# echo "MP_PORTPARENT: $MP_PORTPARENT"
+# echo "MP_PORTCAT: $MP_PORTCAT"
+# echo "MP_PORTDIR: $MP_PORTDIR"
+# exit
+    cd "${MP_DPORTS}"
+    MP_FILES=$(${MP_SVNCMD} ls -R "${MP_PORTDIR}" | grep -v -E "/$")
+    for MP_FILE in $MP_FILES; do
+        echo "svn blame ${MP_DPORTS}/${MP_PORTDIR}/${MP_FILE}:"
+        ${MP_SVNCMD} blame "${MP_PORTDIR}/${MP_FILE}"
+    done
+#   ${MP_SVNCMD} diff
+done
