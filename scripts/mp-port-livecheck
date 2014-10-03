@@ -10,8 +10,13 @@ then
 fi
 for port in $(port echo $@)
 do 
-    echo $port;
-    port -d livecheck $port 2>&1 | grep -E "cannot check|^$port" | awk '{if ($2 == "The") print "    "$(NF-1)" "$(NF);else if ($2 == "Port") print "    "$0;else print $0;}' | sed -e 's,DEBUG: ,,g' -e 's,Error: ,,g' | uniq;
+    status=$(port -d livecheck $port 2>&1 | grep -E "cannot check|^$port" | awk '{if ($2 == "The") print "    "$(NF-1)" "$(NF);else if ($2 == "Port") print "    "$0;else print $0;}' | sed -e 's,DEBUG: ,,g' -e 's,Error: ,,g' | uniq);
+    echo $status;
+    if [[ "${status}" != "${port} seems to be up to date" ]]
+    then
+        echo -n "    maintainers: ";
+        port -q info --maintainers $port;
+    fi
 done
 
 exit 0

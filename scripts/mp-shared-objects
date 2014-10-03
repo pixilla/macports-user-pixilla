@@ -23,6 +23,7 @@ OPTIONS:
     -p      Path or Port (requires -m) to check
     -m      Use -p as a port name rather then a path
     -c      Check if shared library exists, print "${eError}" if it does not
+    -d      Destroot, prepend -d to -c file check path
     -a      Print arch
     -q      Quiet, only print errors, implies -c
     -s      Stop on errors
@@ -32,11 +33,12 @@ EOF
 
 [ -z $TYPE ] && TYPE=PATH
 [ -z $CHECK_EXISTS ] && CHECK_EXISTS=
+[ -z $DESTROOT ] && DESTROOT=
 [ -z $PRINT_ARCH ] && PRINT_ARCH=
 [ -z $QUIET ] && QUIET=
 [ -z $STOP ] && STOP=
 
-while getopts "hp:mcqs" OPTION
+while getopts "hp:mcd:qs" OPTION
 do
     case $OPTION in
         h)
@@ -51,6 +53,9 @@ do
             ;;
         c)
             CHECK_EXISTS=yes
+            ;;
+        d)
+            DESTROOT=$OPTARG
             ;;
         a)
             PRINT_ARCH=yes
@@ -100,14 +105,18 @@ do
             [ -z $PRINT_ARCH ] && lipo -info "${FILES[$fc]}"
             for (( sc = 0 ; sc < ${#SHAREDLIBRARIES[@]} ; sc++ ))
             do
-                if [ ! -f "${SHAREDLIBRARIES[$sc]}" ]
+                if [[ -f "${SHAREDLIBRARIES[$sc]}" ]]
                 then
+                    [ -z $QUIET ] && echo -e "\t${SHAREDLIBRARIES[$sc]}"
+                    [ -z $PRINT_ARCH ] && lipo -info "${SHAREDLIBRARIES[$sc]}"
+                elif [[ ! -z $DESTROOT && -f "${DESTROOT}${SHAREDLIBRARIES[$sc]}" ]]
+                then
+                    [ -z $QUIET ] && echo -e "\t${DESTROOT}${SHAREDLIBRARIES[$sc]}"
+                    [ -z $PRINT_ARCH ] && lipo -info "${DESTROOT}${SHAREDLIBRARIES[$sc]}"
+                else
                     [ -n $QUIET ] && echo "${FILE[$fc]}"
                     echo "SHAREDLIBRARY ${eError}: ${SHAREDLIBRARIES[$sc]}"
                     [ "${STOP}" == "yes" ] && break 2
-                else
-                    [ -z $QUIET ] && echo -e "\t${SHAREDLIBRARIES[$sc]}"
-                    [ -z $PRINT_ARCH ] && lipo -info "${SHAREDLIBRARIES[$sc]}"
                 fi
             done
         fi

@@ -2,10 +2,21 @@
 # mp-svn-diff-port
 # Get svn diff for "port dir <stdin>"
 : ${MP_SVNCMD:=$(which svn)}
-CMD="port dir $@ | sort -u"
-#echo "${CMD}"
-#exit
-DIRS=$(eval $CMD)
-#echo "${DIRS}"
-#exit
-${MP_SVNCMD} diff ${DIRS}
+MP_CMD="port dir $@ | sort -u"
+# echo "MP_CMD: ${MP_CMD}"
+# exit
+MP_DIRS=$(eval $MP_CMD)
+# echo "MP_DIRS: ${MP_DIRS}"
+# exit
+for MP_DIR in $MP_DIRS; do
+# echo "MP_DIR: ${MP_DIR}"
+    MP_DPORTS="${MP_DIR%/*/*}"
+    MP_PORTPARENT="${MP_DIR##*/}"
+    MP_PORTCAT="${MP_DIR%/*}"
+    MP_PORTDIR="${MP_PORTCAT##*/}/${MP_PORTPARENT}"
+# echo "MP_PORTPARENT: $MP_PORTPARENT"
+# echo "MP_PORTCAT: $MP_PORTCAT"
+# echo "MP_PORTDIR: $MP_PORTDIR"
+    cd "${MP_DPORTS}"
+    ${MP_SVNCMD} diff ${MP_PORTDIR}
+done

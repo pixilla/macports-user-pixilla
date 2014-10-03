@@ -12,7 +12,11 @@ then
     echo "mp-distributable zlib"
     exit 1
 fi
-PORTS=$(port -q echo "$@")
-for PORT in $PORTS;do
-    ${MP_SVNBASE}/portmgr/jobs/port_binary_distributable.tcl -v "$PORT"
+PORTS=()
+for PORT in "$@";do
+    PORTS+=("${PORT}")
+done
+for ((i = 0; i < ${#PORTS[@]}; i++));do
+echo ${PORTS[$i]}
+    ${MP_SVNBASE}/portmgr/jobs/port_binary_distributable.tcl -v ${PORTS[$i]}
 done
