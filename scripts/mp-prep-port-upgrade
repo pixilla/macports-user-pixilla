@@ -1,0 +1,12 @@
+#!/bin/bash
+
+DATE=$(date +%Y%m%d%H%M%S)
+mkdir -p  ~/misc/macports/port-upgrade/$DATE
+cd  ~/misc/macports/port-upgrade/$DATE
+sudo port -v sync
+port echo outdated > port-echo-outdated.txt
+port -q echo outdated > port-q-echo-outdated.txt
+port -q installed active > port-q-installed-active.txt
+port -q installed requested and active > port-q-installed-requested-active.txt
+port -q installed > port-q-installed.txt
+port -q outdated > port-q-outdated.txt
