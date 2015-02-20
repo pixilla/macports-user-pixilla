@@ -8,7 +8,7 @@ then
     echo "mp-port-livecheck dependentof:zlib"
     exit 1
 fi
-for port in $(port echo $@)
+for port in $(port -q echo $@)
 do 
     status=$(port -d livecheck $port 2>&1 | grep -E "cannot check|^$port" | awk '{if ($2 == "The") print "    "$(NF-1)" "$(NF);else if ($2 == "Port") print "    "$0;else print $0;}' | sed -e 's,DEBUG: ,,g' -e 's,Error: ,,g' | uniq);
     echo $status;
