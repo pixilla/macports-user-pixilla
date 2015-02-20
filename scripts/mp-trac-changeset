@@ -1,0 +1,12 @@
+#!/bin/bash
+
+if [ $# -lt 1 ]; then
+  basename $0
+  echo "Open trac changeset with system web browser."
+  echo "usage: mp-trac-tickets-changeset 40055"
+  exit
+fi
+
+CHANGESET=$(echo "$@" | sed 's,r,,g')
+
+open "http://trac.macports.org/changeset/${CHANGESET}"
