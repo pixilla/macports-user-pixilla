@@ -9,5 +9,5 @@ then
     exit 1
 fi
 
-port -q rdeps $@ | sed -e '/^-/d' -e 's/  /\|\|/g' -e 's/^\|\|/  /g' -e 's/\|\|/\| /g' &&
+port -q rdeps $@ | sed -e '/^-/d' -e 's/  /\.\./g' -e 's/^\.\./  /g' -e 's/\.\./\. /g' -e 's/\. \([^\.]\)/\| \1/g' &&
 exit 0
