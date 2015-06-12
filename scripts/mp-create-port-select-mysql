@@ -1,0 +1,35 @@
+#!/bin/bash
+
+SELECT_TARGET=$(port dir mysql_select)/files
+SELECT_BASE=${SELECT_TARGET}/base
+SELECT_NONE=${SELECT_TARGET}/none
+
+# while read base; do
+#     echo $base
+# done < ${SELECT_TARGET}/base
+
+for port in $(port echo name:^\(mariadb\|mariadb-10.0\|mariadb-10.1\|percona\|mysql5[0-9]\)$); do
+    port -q contents $port | grep "${MP_PREFIX}/lib/$port/bin\|${MP_PREFIX}/share/man/$port" | sed -e 's/^[ \t]*//' -e "s,${MP_PREFIX}/lib/$port/,,g" -e "s,${MP_PREFIX}/share/man/$port/,man/,g"
+done | sort -u > ${SELECT_BASE}
+
+while read base; do
+    echo "-"
+done < ${SELECT_BASE} > ${SELECT_NONE}
+
+for port in $(port echo name:^\(mariadb\|mariadb-10.0\|mariadb-10.1\|percona\|mysql5[0-9]\)$); do
+    SELECT_PORT=$(port dir $port)/files/$port
+    while read base; do
+        SELECT_FILE=$(echo $base | sed -e "s,^bin/,lib/$port/bin/,g" -e "s,^man/,share/man/$port/,g")
+        PORT_FILE=${MP_PREFIX}/${SELECT_FILE}
+        if [[ -f "${PORT_FILE}" ]]; then
+            echo ${SELECT_FILE}
+        else
+            echo "-"
+        fi
+    done < ${SELECT_BASE} > ${SELECT_PORT}
+    sudo cp ${SELECT_PORT} ${MP_PREFIX}/etc/select/mysql/
+    sudo port select mysql ${port}
+    while read base; do
+        ls -lFGh ${MP_PREFIX}/${base} 2>/dev/null | awk '{print $9$NF}' | sed -e 's,/opt/[^@]*/bin/,,g' -e 's,/opt/[^@]*/man[1-9]/,,g' | awk -F'@' '{if ($1!~$2) print $1,"!~",$2;}'
+    done < ${SELECT_BASE}
+done
