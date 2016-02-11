@@ -18,5 +18,5 @@ for MP_DIR in $MP_DIRS; do
 # echo "MP_PORTCAT: $MP_PORTCAT"
 # echo "MP_PORTDIR: $MP_PORTDIR"
     cd "${MP_DPORTS}"
-    ${MP_SVNCMD} diff ${MP_PORTDIR}
+    ${MP_SVNCMD} diff --diff-cmd=diff -x -U0 ${MP_PORTDIR}
 done

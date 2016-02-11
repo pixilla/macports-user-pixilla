@@ -4,7 +4,7 @@
 : ${MP_SVNCMD:=$(which svn)}
 : ${MP_SVNTRUNK:="${MP_PREFIX}/var/macports/sources/svn.macports.org/trunk"}
 : ${MP_SVNBASE:="${MP_SVNTRUNK}/base"}
-echo "MP_SVNBASE=${MP_SVNBASE}"
+: ${MP_SVNBASEROOT:=$(svn info --show-item wc-root ${MP_SVNBASE})}
 if [ "${MP_PREFIX}" = "/opt/local" ];then
   CONFIGURE_ARGS="--prefix=${MP_PREFIX} --enable-readline"
 else
@@ -12,8 +12,8 @@ else
 fi
 echo "CONFIGURE_ARGS=${CONFIGURE_ARGS}"
 cd "${MP_SVNBASE}"
-${MP_SVNCMD} upgrade
-${MP_SVNCMD} up
+${MP_SVNCMD} upgrade ${MP_SVNBASEROOT}
+${MP_SVNCMD} up ${MP_SVNBASEROOT}
 make distclean
 ./configure ${CONFIGURE_ARGS}
 make
